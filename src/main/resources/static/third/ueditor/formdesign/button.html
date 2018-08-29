@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>按钮</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <!--[if lte IE 6]>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-ie6.css">
+    <![endif]-->
+    <!--[if lte IE 7]>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/ie.css">
+    <![endif]-->
+    <link rel="stylesheet" href="leipi.style.css">
+    <script type="text/javascript" src="../dialogs/internal.js"></script>
+    <script type="text/javascript">
+/* Thank you by  
+http://www.alt-tag.com/blog/2006/02/ie-dom-bugs/ */
+function createElement(type, name)
+{     
+    var element = null;     
+    try {        
+        element = document.createElement('<'+type+' name="'+name+'">');     
+    } catch (e) {}   
+    if(element==null) {     
+        element = document.createElement(type);     
+        element.name = name;     
+    } 
+    return element;     
+}
+    </script>
+</head>
+<body>
+<div class="content">
+    <table class="table table-bordered table-striped table-hover">
+     <tr>
+        <th><span>按钮文字</span><span class="label label-important">*</span></th>
+        <th><span>按钮类型</span><span class="label label-important">*</span> </th>
+    </tr>
+    <tr>
+        <td><input type="text" id="btntext" placeholder="必填项"></td>
+        <td>
+        	<select id="btntype">
+        		<option value="">---请选择---</option>
+                <option value="callbtn">外呼按钮</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <th colspan="2"><span>关联表单字段</span> </th>
+    </tr>
+    <tr>
+    	<td colspan="2" >
+        	<input type="text" class="span6" id="source" placeholder="填写与该按钮关联的表单字段名称"/>
+        </td>
+    </tr>
+    </table>
+</div>
+<script type="text/javascript">
+var oNode = null,thePlugins = 'button';
+window.onload = function() {
+    if( UE.plugins[thePlugins].editdom ){
+        oNode = UE.plugins[thePlugins].editdom;
+		var gText = oNode.innerText,
+		gType=oNode.getAttribute('orgtype'),
+		gSource=oNode.getAttribute('orgsource');
+		gText = gText==null ? '' : gText;
+		$G('btntext').value = gText;
+        $G('source').value = gSource;
+        $G('btntype').value = gType;
+    }
+}
+dialog.oncancel = function () {
+    if( UE.plugins[thePlugins].editdom ) {
+        delete UE.plugins[thePlugins].editdom;
+    }
+};
+dialog.onok = function (){
+	
+	var gText = $G('btntext').value,
+		gType= $G('btntype').value,
+		gSource= $G('source').value;
+	if( gText == '') {
+        alert('按钮文字不能为空');
+        return false;
+    }
+	if( gType == '') {
+        alert('请选择按钮类型');
+        return false;
+    }else{
+    	if( gSource == '') {
+            alert('外呼类型按钮必须关联电话号码字段');
+            return false;
+        }
+    }
+    if( !oNode ) {
+        try {
+            var iconCls = "";
+            if(gType == "callbtn"){
+            	iconCls = "icon-phone";
+            }
+            var html = "&nbsp;<a href='###' plugins='"+thePlugins+"' class='easyui-linkbutton' iconCls='"+iconCls+"' plain='true' orgsource='"+gSource+"' orgtype='"+gType+"'>"+gText+"</a>";
+
+            editor.execCommand('insertHtml', html);
+        } catch (e) {
+            try {
+                editor.execCommand('error');
+            } catch ( e ) {
+                alert('控件异常，请联系技术支持');
+            }
+            return false;
+        }
+    } else {
+    	var iconCls = "";
+        if(gType == "callbtn"){
+        	iconCls = "icon-phone";
+        }
+        oNode.setAttribute('orgsource', gSource);
+        oNode.setAttribute('orgtype', gType);
+        oNode.setAttribute('iconCls', iconCls);
+        oNode.setAttribute('plugins', thePlugins);
+        oNode.innerText = gText;
+        
+        delete UE.plugins[thePlugins].editdom;
+    }
+};
+</script>
+</body>
+</html>

@@ -1,0 +1,275 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>联动-下拉菜单</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <!--[if lte IE 6]>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-ie6.css">
+    <![endif]-->
+    <!--[if lte IE 7]>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/ie.css">
+    <![endif]-->
+    <link rel="stylesheet" href="leipi.style.css">
+    <script type="text/javascript" src="../dialogs/internal.js"></script>
+    <script type="text/javascript" src="jquery-1.7.2.min.js"></script>
+    <script type="text/javascript">
+    function pn() {
+    	return window.document.location.pathname.substring(0, window.document.location.pathname.indexOf('\/', 1));
+    }
+	function createElement(type, name)
+	{     
+	    var element = null;     
+	    try {        
+	        element = document.createElement('<'+type+' name="'+name+'">');     
+	    } catch (e) {}   
+	    if(element==null) {     
+	        element = document.createElement(type);     
+	        element.name = name;     
+	    } 
+	    return element;     
+	}
+</script>
+</head>
+<body>
+<div class="content">
+    <table class="table table-bordered table-striped table-hover">
+    <input type="hidden" id="oldfieldname" />
+     <tr>
+        <th><span>字段名称（字母、_、数字）</span><span class="label label-important">*</span></th>
+        <th><span>字段标题</span><span class="label label-important">*</span> </th>
+    </tr>
+    <tr>
+        <td><input type="text" id="fieldname" placeholder="必填项">
+        	<label class="checkbox inline"><input id="first" type="checkbox"/>需初始数据</label>
+        </td>
+        <td><input type="text" id="orgname" placeholder="必填项"></td>
+    </tr>
+     <tr>
+        <th><span>流程变量</span></th>
+        <th><span>必选项</span> </th>
+    </tr>
+    <tr>
+        <td><label class="checkbox inline"><input id="fieldflow" type="checkbox"/> 流程变量</label></td>
+        <td><label class="checkbox inline"><input id="required" type="checkbox"/> 必选项</label> </td>
+    </tr>
+    <tr>
+        <th><span>列表显示</span></th>
+        <th><span>选择联动类型</span> <span class="label label-important">*</span></th>
+    </tr>
+    <tr>
+        <td><label class="checkbox inline"><input id="show" type="checkbox"/> 列表显示</label></td>
+        <td>
+        	<select id="enumtype">
+        		<option value="">--请选择--</option>
+        	</select>
+		</td>
+    </tr>
+    <tr>
+        <th colspan="2">
+            <span>列表选项</span>
+        </th>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <select id="orglist"  multiple="multiple" class="span14"></select>
+        </td>
+    </tr>
+    </table>
+</div>
+<script type="text/javascript">
+var oNode = null,thePlugins = 'enumlink';
+window.onload = function() {
+    if( UE.plugins[thePlugins].editdom ){
+        oNode = UE.plugins[thePlugins].editdom;
+        var gTitle=oNode.getAttribute('title').replace(/&quot;/g,"\""),gName=oNode.getAttribute('fieldname'),
+        enumtype=oNode.getAttribute('enumtype'),first=oNode.getAttribute('first'),
+        gFlow=oNode.getAttribute('fieldflow'),required=oNode.getAttribute('required'),show=oNode.getAttribute('show');
+        gTitle = gTitle==null ? '' : gTitle;
+        gName = gName==null ? '' : gName;
+        $G('orgname').value = gTitle;
+        $G('fieldname').value = gName;
+        $G('oldfieldname').value = gName;
+        if (gFlow == '1')
+        {
+            $G('fieldflow').checked = true;
+        }
+        if (required == '1')
+        {
+            $G('required').checked = true;
+        }
+        if (show == '1')
+        {
+            $G('show').checked = true;
+        }
+        if (first == '1')
+        {
+            $G('first').checked = true;
+        }
+    }
+    $.ajax({
+		  url : pn()+"/crm/enumtype/getAllEnumtype.do",
+		  type: "post",
+		  dataType : "json",
+		  error : function() {
+			  alert("系统异常。");
+		  },
+		  success : function(data) {
+			  if(data){
+				  var $enumtype = $("#enumtype");
+				  var option = "";
+				  for(var i=0; i<data.length;i++){
+					  var op = data[i];
+					  option += "<option value='"+op.enumtypeId+"'>"+op.enumtypeName+"</option>";
+				  }
+				  $enumtype.append($(option));
+				  if(enumtype){
+					$enumtype.val(enumtype).change();
+				  }
+			  }
+		  }
+	 });
+}
+dialog.oncancel = function () {
+    if( UE.plugins[thePlugins].editdom ) {
+        delete UE.plugins[thePlugins].editdom;
+    }
+};
+dialog.onok = function (){
+	var gName=$G('fieldname').value,
+		ofn = $G('oldfieldname').value;
+	if( gName == '') {
+	    alert('字段名称不能为空');
+	    return false;
+	}
+	if(!/^[A-Za-z]+\w*$/.test(gName)){
+		alert('字段名称只能是字母、_、数字且以字母开头');
+	    return false;
+	}
+    if($G('orgname').value==''){
+        alert('字段标题不能为空');
+        return false;
+    }
+    if( $G('enumtype').value == 0 ) {
+        alert('请选择联动类型');
+        return false;
+    }
+    if(ofn != gName && !existField(gName)){
+    	alert('字段名称已经存在');
+    	$G('fieldname').focus();
+        return false;
+    }
+    var gTitle=$G('orgname').value.replace(/\"/g,"&quot;"),
+    	enumtype = $G('enumtype').value,
+	    gFlow = '0',
+		show ='0',
+		first='0',
+		required='0';
+    
+    if ($G('fieldflow').checked ) gFlow = '1';
+    if ($G('show').checked ) show = '1';
+    if ($G('required').checked ) required = '1';
+    if ($G('first').checked ) first = '1';
+     
+    if( !oNode ) {
+        try {
+            oNode = createElement('select','NEWFIELD');
+            oNode.setAttribute('title',gTitle);
+            oNode.setAttribute('plugins',thePlugins );
+            oNode.setAttribute('fieldname',gName);
+            oNode.setAttribute('enumtype',enumtype);
+            oNode.setAttribute('value','${'+gName.toUpperCase()+'}');
+            if ( gFlow=='1' ) {
+                oNode.setAttribute('fieldflow',1);
+            } else {
+                oNode.setAttribute('fieldflow',0);
+            }
+            if ( required=='1' ) {
+                oNode.setAttribute('required',1);
+            } else {
+                oNode.setAttribute('required',0);
+            }
+            if ( show=='1' ) {
+                oNode.setAttribute('show',1);
+            } else {
+                oNode.setAttribute('show',0);
+            }
+            if ( first=='1' ) {
+                oNode.setAttribute('first',1);
+            } else {
+                oNode.setAttribute('first',0);
+            }
+            //firefox要利用span
+            editor.execCommand('insertHtml','{|-<span plugins="enumlink">'+oNode.outerHTML+'</span>-|}');
+            return true ;
+        } catch ( e ) {
+            try {
+                editor.execCommand('error');
+            } catch ( e ) {
+                alert('控件异常，请联系技术支持');
+            }
+            return false;
+        }
+    } else {
+        oNode.setAttribute('title', gTitle); 
+        oNode.setAttribute('fieldname',gName);
+        oNode.setAttribute('enumtype',enumtype);
+        oNode.setAttribute('value','${'+gName.toUpperCase()+'}');
+        if ( gFlow=='1' ) {
+            oNode.setAttribute('fieldflow',1);
+        } else {
+            oNode.setAttribute('fieldflow',0);
+        }
+        if ( required=='1' ) {
+            oNode.setAttribute('required',1);
+        } else {
+            oNode.setAttribute('required',0);
+        }
+        if ( show=='1' ) {
+            oNode.setAttribute('show',1);
+        } else {
+            oNode.setAttribute('show',0);
+        }
+        if ( first=='1' ) {
+            oNode.setAttribute('first',1);
+        } else {
+            oNode.setAttribute('first',0);
+        }
+        // Remove all options.
+        while ( oNode.options.length > 0 ){
+            oNode.remove(0) ;
+        }
+        delete UE.plugins[thePlugins].editdom; 
+    }
+};
+
+$(function(){
+	$("#enumtype").change(function(){
+		var enumtypeId = this.value;
+		var $orglist = $("#orglist").empty();
+		if(enumtypeId != ""){
+			$.ajax({
+				  url : pn()+"/crm/enumtype/"+enumtypeId+"/getEnumtypeSubs.do",
+				  type: "post",
+				  dataType : "json",
+				  error : function() {
+					  alert("系统异常。");
+				  },
+				  success : function(data) {
+					  if(data){
+						  var option = "";
+						  for(var i=0; i<data.length;i++){
+							  var op = data[i];
+							  option += "<option value='"+op.enumtypeSubName+"'>"+op.enumtypeSubName+"</option>";
+						  }
+						  $orglist.append($(option));
+					  }
+				  }
+			 });
+		}
+	});
+});
+</script>
+</body>
+</html>

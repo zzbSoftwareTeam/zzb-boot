@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>客服处理诉求和微信对话界面</title>
+	<link rel="stylesheet" th:href="@{/css/base.css}" />
+	<link rel="stylesheet" th:href="@{/css/page.css}"/>
+</head>
+<body>
+	<div class="wrapper">
+    	<ul class="tab_ul">
+    		<li class="new"><i></i><a href ="javascript:void(0)">当前会话</a></li>
+        	<li><i></i><a href ="javascript:void(0)">处理诉求</a><em>10</em></li>
+            <li><i></i><a href ="javascript:void(0)">历史会话</a></li>
+        </ul>
+    	<div class="case">
+        	<!--当前会话-->
+    		<div class="box">
+            	<div class="l">
+                	<div class="title"><p>微信实时沟通用户</p></div>
+                    <div class="list" id="list">
+                        <dl class="new">
+                            <dt>
+                                <span class="dot"></span>
+                                <img th:src="@{/img/photo_03.jpg}" />
+                            </dt>
+                            <dd>
+                                <p class="name"><span class="group_name">李花李花花李花花李花花李花花李花花李花花李花花李花花花</span><i class="time">2017/10/10</i></p>
+                                <p class="chat_content">周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去</p>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                <span class="dot"></span>
+                                <img th:src="@{/img/photo_03.jpg}" />
+                            </dt>
+                            <dd>
+                                <p class="name"><span class="group_name">李花李花花李花花李花花李花花李花花李花花李花花李花花花</span><i class="time">2017/10/10</i></p>
+                                <p class="chat_content">周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去</p>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                <span class="dot"></span>
+                                <img th:src="@{/img/photo_03.jpg}" />
+                            </dt>
+                            <dd>
+                                <p class="name"><span class="group_name">李花李花花李花花李花花李花花李花花李花花李花花李花花花</span><i class="time">2017/10/10</i></p>
+                                <p class="chat_content">周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去</p>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                <span class="dot"></span>
+                                <img th:src="@{/img/photo_03.jpg}" />
+                            </dt>
+                            <dd>
+                                <p class="name"><span class="group_name">李花李花花李花花李花花李花花李花花李花花李花花李花花花</span><i class="time">2017/10/10</i></p>
+                                <p class="chat_content">周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去</p>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                <span class="dot"></span>
+                                <img th:src="@{/img/photo_03.jpg}" />
+                            </dt>
+                            <dd>
+                                <p class="name"><span class="group_name">李花李花花李花花李花花李花花李花花李花花李花花李花花花</span><i class="time">2017/10/10</i></p>
+                                <p class="chat_content">周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去</p>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                <span class="dot"></span>
+                                <img th:src="@{/img/photo_03.jpg}" />
+                            </dt>
+                            <dd>
+                                <p class="name"><span class="group_name">李花李花花李花花李花花李花花李花花李花花李花花李花花花</span><i class="time">2017/10/10</i></p>
+                                <p class="chat_content">周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去</p>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                <span class="dot"></span>
+                                <img th:src="@{/img/photo_03.jpg}" />
+                            </dt>
+                            <dd>
+                                <p class="name"><span class="group_name">李花李花花李花花李花花李花花李花花李花花李花花李花花花</span><i class="time">2017/10/10</i></p>
+                                <p class="chat_content">周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去</p>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                <span class="dot"></span>
+                                <img th:src="@{/img/photo_03.jpg}" />
+                            </dt>
+                            <dd>
+                                <p class="name"><span class="group_name">李花李花花李花花李花花李花花李花花李花花李花花李花花花</span><i class="time">2017/10/10</i></p>
+                                <p class="chat_content">周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去</p>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                <span class="dot"></span>
+                                <img th:src="@{/img/photo_03.jpg}" />
+                            </dt>
+                            <dd>
+                                <p class="name"><span class="group_name">李花李花花李花花李花花李花花李花花李花花李花花李花花花</span><i class="time">2017/10/10</i></p>
+                                <p class="chat_content">周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去</p>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                <span class="dot"></span>
+                                <img th:src="@{/img/photo_03.jpg}" />
+                            </dt>
+                            <dd>
+                                <p class="name"><span class="group_name">李花李花花李花花李花花李花花李花花李花花李花花李花花花</span><i class="time">2017/10/10</i></p>
+                                <p class="chat_content">周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去</p>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                <span class="dot"></span>
+                                <img th:src="@{/img/photo_03.jpg}" />
+                            </dt>
+                            <dd>
+                                <p class="name"><span class="group_name">李花李花花李花花李花花李花花李花花李花花李花花李花花花</span><i class="time">2017/10/10</i></p>
+                                <p class="chat_content">周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去</p>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                <span class="dot"></span>
+                                <img th:src="@{/img/photo_03.jpg}" />
+                            </dt>
+                            <dd>
+                                <p class="name"><span class="group_name">李花李花花李花花李花花李花花李花花李花花李花花李花花花</span><i class="time">2017/10/10</i></p>
+                                <p class="chat_content">周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去</p>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                <span class="dot"></span>
+                                <img th:src="@{/img/photo_03.jpg}" />
+                            </dt>
+                            <dd>
+                                <p class="name"><span class="group_name">李花李花花李花花李花花李花花李花花李花花李花花李花花花</span><i class="time">2017/10/10</i></p>
+                                <p class="chat_content">周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去</p>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                <span class="dot"></span>
+                                <img th:src="@{/img/photo_03.jpg}" />
+                            </dt>
+                            <dd>
+                                <p class="name"><span class="group_name">李花李花花李花花李花花李花花李花花李花花李花花李花花花</span><i class="time">2017/10/10</i></p>
+                                <p class="chat_content">周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去</p>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                <span class="dot"></span>
+                                <img th:src="@{/img/photo_03.jpg}" />
+                            </dt>
+                            <dd>
+                                <p class="name"><span class="group_name">李花李花花李花花李花花李花花李花花李花花李花花李花花花</span><i class="time">2017/10/10</i></p>
+                                <p class="chat_content">周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去</p>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>
+                                <span class="dot"></span>
+                                <img th:src="@{/img/photo_03.jpg}" />
+                            </dt>
+                            <dd>
+                                <p class="name"><span class="group_name">23李花李花花李花花李花花李花花李花花李花花李花花李花花花</span><i class="time">2017/10/10</i></p>
+                                <p class="chat_content">周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去</p>
+                            </dd>
+                        </dl>
+            		</div>
+                </div>
+                <div class="c">
+                	<div class="title"><p>与 Lily 的对话</p></div>
+                	
+                    	<div class="chat_box" id="talk_box">
+                            <div class="talk">
+                            	<i class="send_time">2017-2-27</i>
+                                <div class="chat_conversation">
+                                    <i class="name_left">碧昂丝</i>
+                                    <div class="message white_bg message_left">
+                                        <div class="chat_photo photo_pic"><img th:src="@{/img/photo_03.jpg}" /></div>
+                                        <pre>这里是聊天内容这里是聊天内里是聊天内容这里是聊天内里是聊天内容这里是聊天内里是聊天内容这里是聊天内里是聊天内容这里是聊天内里是聊天内容这里是聊天内里是聊天内容这里是聊天内里是聊天内容这里是聊天内</pre>  
+                                        <div class="chat_left_fail" ></div>
+                                        <div class="chat_left_lodding" style="display:none;"></div>
+                                    </div>   
+                                </div>
+                                <i class="send_time">2017-2-27</i>
+                                <div class="chat_conversation">
+                                    <i class="name_left">碧昂丝</i>
+                                    <div class="message white_bg message_left">
+                                        <div class="chat_photo photo_pic"><img th:src="@{/img/photo_03.jpg}" /></div>
+                                        <pre>推流http://wwww.baidu.comhttp://wwww.baidu.comhttp://wwww.baidu.comhttp://wwww.baidu.comhttp://wwww.baidu.com</pre>  
+                                        <div class="chat_left_fail" ></div>
+                                        <div class="chat_left_lodding" style="display:none;"></div>
+                                    </div>   
+                                </div>
+                                <div class="chat_conversation">
+                                    <i class="name_left">碧昂丝</i>
+                                    <div class="message white_bg message_left">
+                                        <div class="chat_photo photo_pic"><img th:src="@{/img/photo_03.jpg}" /></div>
+                                        <div class="print"><img th:src="@{/img/pic_03.png}" /></div>  
+                                        <div class="chat_left_fail" style="display:none;"></div>
+                                        <div class="chat_left_lodding" ></div>
+                                    </div>   
+                                </div>
+                                <div class="chat_conversation">
+                                    <i class="name_left">碧昂丝</i>
+                                    <div class="message white_bg message_left">
+                                        <div class="chat_photo photo_pic"><img th:src="@{/img/photo_03.jpg}" /></div>
+                                        <div class="video papers">
+                                                <div class="pic"><img th:src="@{/img/gs_w.png}" /></div>
+                                                <div class="text">
+                                                    <h4>文件名件名称文件名.doc</h4>
+                                                    <p>400.13 KB | <a href="#">下载</a></p>
+                                                </div>
+                                                <div class="clear"></div>
+                                        </div>  
+                                        <div class="chat_left_fail" style="display:none;"></div>
+                                        <div class="chat_left_lodding" ></div>
+                                    </div>   
+                                </div>
+                                <div class="chat_conversation">
+                                    <i class="name_right">碧昂丝</i>
+                                    <div class="message blue_bg message_right">
+                                        <div class="chat_photo photo_pic"><img th:src="@{/img/photo_03.jpg}" /></div>
+                                        <pre>这里是聊天内容这里是聊天内里是聊天内容这里是聊天内里是聊天内容这里是聊天内里是聊天内容这里是聊天内里是聊天内容这里是聊天内里是聊天内容这里是聊天内里是聊天内容这里是聊天内里是聊天内容这里是聊天内</pre>  
+                                        <div class="chat_right_fail" ></div>
+                                        <div class="chat_right_lodding" style="display:none;"></div>
+                                    </div>   
+                                </div>
+                                <i class="send_time">2017-2-27</i>
+                                <div class="chat_conversation">
+                                    <i class="name_right">碧昂丝</i>
+                                    <div class="message blue_bg message_right">
+                                        <div class="chat_photo photo_pic"><img th:src="@{/img/photo_03.jpg}" /></div>
+                                        <pre>推流http://wwww.baidu.comhttp://wwww.baidu.comhttp://wwww.baidu.comhttp://wwww.baidu.comhttp://wwww.baidu.com</pre>  
+                                        <div class="chat_right_fail" ></div>
+                                        <div class="chat_right_lodding" style="display:none;"></div>
+                                    </div>   
+                                </div>
+                                <div class="chat_conversation">
+                                    <i class="name_right">碧昂丝</i>
+                                    <div class="message blue_bg message_right">
+                                        <div class="chat_photo photo_pic"><img th:src="@{/img/photo_03.jpg}" /></div>
+                                        <div class="print"><img th:src="@{/img/pic_03.png}" /></div>  
+                                        <div class="chat_right_fail" ></div>
+                                        <div class="chat_right_lodding" style="display:none;"></div>
+                                    </div>   
+                                </div>
+                                <div class="chat_conversation">
+                                    <i class="name_right">碧昂丝</i>
+                                    <div class="message blue_bg message_right">
+                                        <div class="chat_photo photo_pic"><img th:src="@{/img/photo_03.jpg}" /></div>
+                                        <div class="video papers">
+                                                <div class="pic"><img th:src="@{/img/gs_w.png}" /></div>
+                                                <div class="text">
+                                                    <h4>文件名件名称文件名.doc</h4>
+                                                    <p>400.13 KB | <a href="#">下载</a></p>
+                                                </div>
+                                                <div class="clear"></div>      
+                                        </div>  
+                                        <div class="chat_right_fail" style="display:none;"></div>
+                                        <div class="chat_right_lodding" ></div>
+                                    </div>   
+                                </div>
+                            </div>
+                        </div>
+                        <!--会话内容-end-->
+                        <div class="compile">
+                            <div class="info">
+                                <ul>
+                                    <li><span class="icon_expression"></span></li> 
+                                    <li>
+                                        <a href="javascript:;" class="file">
+                                            <input type="file">
+                                        </a>
+                                    </li>
+                                    <li><span class="icon_pic"></span></li> 
+                                </ul>
+                                <div class="textarea_div">
+                                    <textarea></textarea>
+                                </div>
+                            </div>
+                            <input type="button" value="发送" class="send_btn" />
+                            <div class="clear"></div>
+                        </div>        
+                </div>
+                <div class="r">
+                	<ul class="title">
+                    	<li>服务登记</li>
+                        <li class="link">知识库</li>
+                    </ul>
+                	<div class="info">
+                		<div class="data">
+                        	<table cellpadding="0" cellspacing="0" class="fill_table">
+                            	<tr>
+                                	<td width="15%">＊姓名：</td>
+                                    <td><input type="text" /></td>
+                                    <td>＊性别：</td>
+                                    <td><input type="text" /></td>
+                                </tr>
+                            	<tr>
+                            		<td>＊职业：</td>
+                                    <td><input type="text" /></td>
+                                    <td>＊电话：</td>
+                                    <td><input type="text" /></td>
+                                </tr>
+                                <tr>
+                            		<td>＊电子邮箱：</td>
+                                    <td><input type="text" /></td>
+                                    <td>证件号码：</td>
+                                    <td><input type="text" /></td>
+                                </tr>
+                                <tr>
+                                	<td>＊联系地址：</td>
+                                    <td colspan="3"><input type="text" style="width:92%;" /></td>
+                                </tr>
+                            </table>
+                            <div class="line"></div>
+                            <table cellpadding="0" cellspacing="0" class="fill_table">
+                            	<tr>
+                            		<td width="15%">问题解决状态：</td>
+                                    <td>
+                                    	<div class="hide">
+                                            <label class="m-select-result"></label>
+                                            <div class="arrow"></div>
+                                            <select class="m-select" name="more">
+                                                <option value="在线办结">在线办结</option>
+                                                <option value="在线办结2">在线办结2</option>
+                                                <option value="在线办结3">在线办结3</option>
+                                            </select> 
+                                        </div>
+                                    </td>
+                            	</tr>
+                                <tr>
+                                	<td></td>
+                                    <td><input type="button" value="结束会话" /><input type="button" value="转派工单" /></td>
+                                </tr>
+                            </table>
+                            <div class="line"></div>
+                            <div id="list_table">
+                                <table cellpadding="0" cellspacing="0" class="list_table">
+                                    <tr>
+                                        <th>诉求人姓名</th>
+                                        <th>联系电话</th>
+                                        <th>诉求标题</th>
+                                        <th>诉求类型</th>
+                                    </tr>
+                                    <tr>
+                                        <td>诉求人姓名</td>
+                                        <td>12345678911</td>
+                                        <td><a href="#">红花坡路口环境脏乱差</a></td>
+                                        <td>投诉</td>
+                                    </tr>
+                                    <tr>
+                                        <td>诉求人姓名</td>
+                                        <td>12345678911</td>
+                                        <td><a href="#">红花坡路口环境脏乱差</a></td>
+                                        <td>投诉</td>
+                                    </tr>
+                                    <tr>
+                                        <td>诉求人姓名</td>
+                                        <td>12345678911</td>
+                                        <td><a href="#">红花坡路口环境脏乱差</a></td>
+                                        <td>投诉</td>
+                                    </tr>
+                                    <tr>
+                                        <td>诉求人姓名</td>
+                                        <td>12345678911</td>
+                                        <td><a href="#">红花坡路口环境脏乱差</a></td>
+                                        <td>投诉</td>
+                                    </tr>
+                                    <tr>
+                                        <td>诉求人姓名</td>
+                                        <td>12345678911</td>
+                                        <td><a href="#">红花坡路口环境脏乱差</a></td>
+                                        <td>投诉</td>
+                                    </tr>
+                                    <tr>
+                                        <td>诉求人姓名</td>
+                                        <td>12345678911</td>
+                                        <td><a href="#">红花坡路口环境脏乱差</a></td>
+                                        <td>投诉</td>
+                                    </tr>
+                                    <tr>
+                                        <td>诉求人姓名</td>
+                                        <td>12345678911</td>
+                                        <td><a href="#">红花坡路口环境脏乱差</a></td>
+                                        <td>投诉</td>
+                                    </tr>
+                                    <tr>
+                                        <td>诉求人姓名</td>
+                                        <td>12345678911</td>
+                                        <td><a href="#">红花坡路口环境脏乱差</a></td>
+                                        <td>投诉</td>
+                                    </tr>
+                                    <tr>
+                                        <td>诉求人姓名</td>
+                                        <td>12345678911</td>
+                                        <td><a href="#">红花坡路口环境脏乱差</a></td>
+                                        <td>投诉</td>
+                                    </tr>
+                                    <tr>
+                                        <td>诉求人姓名</td>
+                                        <td>12345678911</td>
+                                        <td><a href="#">红花坡路口环境脏乱差</a></td>
+                                        <td>投诉</td>
+                                    </tr>
+                                    <tr>
+                                        <td>诉求人姓名</td>
+                                        <td>12345678911</td>
+                                        <td><a href="#">红花坡路口环境脏乱差</a></td>
+                                        <td>投诉</td>
+                                    </tr>
+                                    <tr>
+                                        <td>诉求人姓名</td>
+                                        <td>12345678911</td>
+                                        <td><a href="#">红花坡路口环境脏乱差</a></td>
+                                        <td>投诉</td>
+                                    </tr>
+                                    <tr>
+                                        <td>诉求人姓名</td>
+                                        <td>12345678911</td>
+                                        <td><a href="#">2红花坡路口环境脏乱差</a></td>
+                                        <td>投诉</td>
+                                    </tr>
+                                </table>  
+                            </div> 
+                        </div>
+                		<div class="data" style="display:none;">
+                        	<div class="search_vessel">
+                            	<input type="text" class="text" placeholder="搜索" id="know_search_id"/>
+                                <span class="icon-search"></span>
+                                <ul class="search_list" id="search_list_id">
+                                   <!--  <li class="new"><em>省防疫站</em>电话和地址</li>   -->
+                                </ul>
+                            </div>
+                            <div class="result_list" id="result_list">
+                            	<ul id="result_list_ul">
+                                </ul>
+                            </div>
+                        </div>
+                	</div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <!--当前会话-end-->
+            <!--处理诉求-->
+        	<div class="box" style="display:none;">
+            	<div class="l">
+                	<div class="title">
+                    	<p>待处理诉求<i></i></p>
+                    </div>
+                    <div class="pending_list" id="pending_list">
+                    	<div class="pending_data new">
+                        	<p class="name"><span class="group_name">李花李花花李花花李花花李花花李花花李花花李花花李花花花</span><i class="time">2017/10/10</i></p>
+                    		<p class="chat_content">周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去</p>
+                        </div>
+                        <div class="pending_data">
+                        	<p class="name"><span class="group_name">李花李花花李花花李花花李花花李花花李花花李花花李花花花</span><i class="time">10:34</i></p>
+                    		<p class="chat_content">周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去</p>
+                        </div>
+                        <div class="pending_data">
+                        	<p class="name"><span class="group_name">李花李花花李花花李花花李花花李花花李花花李花花李花花花</span><i class="time">10:34</i></p>
+                    		<p class="chat_content">周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去</p>
+                        </div>
+                        <div class="pending_data">
+                        	<p class="name"><span class="group_name">李花李花花李花花李花花李花花李花花李花花李花花李花花花</span><i class="time">10:34</i></p>
+                    		<p class="chat_content">周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去</p>
+                        </div>
+                        <div class="pending_data">
+                        	<p class="name"><span class="group_name">李花李花花李花花李花花李花花李花花李花花李花花李花花花</span><i class="time">10:34</i></p>
+                    		<p class="chat_content">周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去</p>
+                        </div>
+                        <div class="pending_data">
+                        	<p class="name"><span class="group_name">李花李花花李花花李花花李花花李花花李花花李花花李花花花</span><i class="time">10:34</i></p>
+                    		<p class="chat_content">周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去</p>
+                        </div>
+                        <div class="pending_data">
+                        	<p class="name"><span class="group_name">李花李花花李花花李花花李花花李花花李花花李花花李花花花</span><i class="time">10:34</i></p>
+                    		<p class="chat_content">周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去</p>
+                        </div>
+                        <div class="pending_data">
+                        	<p class="name"><span class="group_name">李花李花花李花花李花花李花花李花花李花花李花花李花花花</span><i class="time">10:34</i></p>
+                    		<p class="chat_content">周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去</p>
+                        </div>
+                        <div class="pending_data">
+                        	<p class="name"><span class="group_name">李花李花花李花花李花花李花花李花花李花花李花花李花花花</span><i class="time">10:34</i></p>
+                    		<p class="chat_content">周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去</p>
+                        </div>
+                        <div class="pending_data">
+                        	<p class="name"><span class="group_name">李花李花花李花花李花花李花花李花花李花花李花花李花花花</span><i class="time">10:34</i></p>
+                    		<p class="chat_content">10周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去</p>
+                        </div>
+                    </div>
+                    <div class="title">
+                    	<p>已处理诉求<i></i></p>
+                    </div>
+                    <div class="pending_list" id="pending_list2">
+                    	<div class="pending_data new">
+                        	<p class="name"><span class="group_name">李花李花花李花花李花花李花花李花花李花花李花花李花花花</span><i class="time">2017/10/10</i></p>
+                    		<p class="chat_content">周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去</p>
+                        </div>
+                        <div class="pending_data">
+                        	<p class="name"><span class="group_name">李花李花花李花花李花花李花花李花花李花花李花花李花花花</span><i class="time">10:34</i></p>
+                    		<p class="chat_content">周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去</p>
+                        </div>
+                        <div class="pending_data">
+                        	<p class="name"><span class="group_name">李花李花花李花花李花花李花花李花花李花花李花花李花花花</span><i class="time">10:34</i></p>
+                    		<p class="chat_content">周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去</p>
+                        </div>
+                        <div class="pending_data">
+                        	<p class="name"><span class="group_name">李花李花花李花花李花花李花花李花花李花花李花花李花花花</span><i class="time">10:34</i></p>
+                    		<p class="chat_content">周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去</p>
+                        </div>
+                        <div class="pending_data">
+                        	<p class="name"><span class="group_name">李花李花花李花花李花花李花花李花花李花花李花花李花花花</span><i class="time">10:34</i></p>
+                    		<p class="chat_content">周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去</p>
+                        </div>
+                        <div class="pending_data">
+                        	<p class="name"><span class="group_name">李花李花花李花花李花花李花花李花花李花花李花花李花花花</span><i class="time">10:34</i></p>
+                    		<p class="chat_content">周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去</p>
+                        </div>
+                        <div class="pending_data">
+                        	<p class="name"><span class="group_name">李花李花花李花花李花花李花花李花花李花花李花花李花花花</span><i class="time">10:34</i></p>
+                    		<p class="chat_content">周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去</p>
+                        </div>
+                        <div class="pending_data">
+                        	<p class="name"><span class="group_name">李花李花花李花花李花花李花花李花花李花花李花花李花花花</span><i class="time">10:34</i></p>
+                    		<p class="chat_content">周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去</p>
+                        </div>
+                        <div class="pending_data">
+                        	<p class="name"><span class="group_name">李花李花花李花花李花花李花花李花花李花花李花花李花花花</span><i class="time">10:34</i></p>
+                    		<p class="chat_content">周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去</p>
+                        </div>
+                        <div class="pending_data">
+                        	<p class="name"><span class="group_name">李花李花花李花花李花花李花花李花花李花花李花花李花花花</span><i class="time">10:34</i></p>
+                    		<p class="chat_content">10周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去周末一起去</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="c">
+                	<div class="title">
+                    	<p>诉求详情</p>
+                    </div>
+                    <div class="details" id="details">
+                    	<div class="sub_title">诉求人信息</div>
+                    	<table cellpadding="0" cellspacing="0" class="fill_table">
+                            <tr>
+                                <td width="12%">姓名：</td>
+                                <td class="fColor_black">李鹏</td>
+                                <td width="12%">性别：</td>
+                                <td class="fColor_black">男</td>
+                            </tr>
+                            <tr>
+                                <td>职业：</td>
+                                <td class="fColor_black">自由职业</td>
+                                <td>电话：</td>
+                                <td class="fColor_black">12345678999</td>
+                            </tr>
+                            <tr>
+                                <td>电子邮箱：</td>
+                                <td class="fColor_black">lipeng@163.com</td>
+                                <td>证件号码：</td>
+                                <td class="fColor_black">430243198832939321</td>
+                            </tr>
+                            <tr>
+                                <td>联系地址：</td>
+                                <td colspan="3" class="fColor_black">长沙市雨花区韶山南路334号中南大学铁道学院梅岭村4-231</td>
+                            </tr>
+                        </table>
+                    	<div class="sub_title">诉求详情</div>
+                    	<table cellpadding="0" cellspacing="0" class="fill_table">
+                            <tr>
+                                <td width="12%">诉求类型：</td>
+                                <td class="fColor_black">投诉</td>
+                                <td width="12%">事件时间：</td>
+                                <td class="fColor_black">2017-08-21 04:32</td>
+                            </tr>
+                            <tr>
+                                <td>事件辖区：</td>
+                                <td class="fColor_black">长沙市雨花区</td>
+                                <td>诉求单号：</td>
+                                <td class="fColor_black">2341342542</td>
+                            </tr>
+                            <tr>
+                                <td>事件地址：</td>
+                                <td colspan="3" class="fColor_black">长沙市雨花区韶山南路334号中南大学铁道学院梅岭村4-231</td>
+                            </tr>
+                            <tr>
+                                <td>投诉标题：</td>
+                                <td colspan="3" class="fColor_black">投诉标题投诉标题投诉标题投诉标题</td>
+                            </tr>
+                            <tr>
+                                <td valign="top">投诉内容：</td>
+                                <td colspan="3" class="fColor_black">
+                                	<p>投诉内容投诉内容投诉内容投诉内容投诉内容投诉内容投诉内容投诉内容投诉内容投诉内容投诉内容投诉内容投诉内容投诉内容投诉内容投诉内容投诉内容投诉内容投诉内容投诉内容</p>
+                                   	<ul>
+                                    	<li><img th:src="@{/img/photo_pic.png}" /></li>
+                                        <li><img th:src="@{/img/photo_pic.png}" /></li>
+                                    </ul> 
+                                </td>
+                            </tr>  
+                        </table>
+                        <div class="acceptance">
+                        	<div class="sub_title">诉求受理</div>
+                            <table cellpadding="0" cellspacing="0" class="fill_table">
+                                <tr>
+                                    <td width="12%">受理人：</td>
+                                    <td class="fColor_black">张三</td>
+                                    <td width="12%">受理时间：</td>
+                                    <td class="fColor_black">2017-08-21 04:32</td>
+                                </tr>
+                                <tr>
+                                    <td>回复意见：</td>
+                                    <td colspan="3"><textarea></textarea></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td colspan="3">
+                                        <ul>
+                                            <li><i class="chose_no"></i>邮件回复</li>
+                                            <li class="marginL_60"><i class="chose_no"></i>短信回复</li> 
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td colspan="3"><input type="button" value="在线办结" /><input type="button" value="转派工单" class="marginL_60"/></td>
+                                </tr>
+                            </table> 
+                        </div>
+                	</div>
+                </div>
+                <div class="r">
+                	<div class="title">
+                    	<p>知识库</p>
+                    </div>
+                    <div class="top">
+                    	<a href="#" class="return"></a>
+                        <div class="search_vessel">
+                            <input type="text" class="text" placeholder="搜索"/>
+                            <span class="icon-search"></span>
+                            <ul class="search_list" style="display:none;">
+                                <li class="new"><em>省防疫站</em>电话和地址</li>  
+                                <li><em>省防疫站</em>电话和地址</li>  
+                                <li><em>省防疫站</em>电话和地址</li>  
+                                <li><em>省防疫站</em>电话和地址</li>  
+                                <li><em>省防疫站</em>电话和地址</li>  
+                                <li><em>省防疫站</em>电话和地址</li>  
+                                <li><em>省防疫站</em>电话和地址</li>  
+                                <li><em>省防疫站</em>电话和地址</li>  
+                                <li><em>省防疫站</em>电话和地址</li>  
+                                <li><em>省防疫站</em>电话和地址</li>  
+                                <li><em>省防疫站</em>电话和地址10</li>  
+                            </ul>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="text_box" id="text_box">
+                    	<h2>2017年湖南企业中报披露 4家湘企营收过百亿<input type="button" value="引用回复" /></h2>
+                    	<div class="time"><em>2017-08-20 13:32</em>&nbsp;&nbsp;&nbsp;&nbsp;<em>知识分类：新增分类</em></div>
+                    	<div class="text_content">
+                        	<p>今年以来，10余家湘企在A股市场成功挂牌上市，上市湘企的阵营扩大到了97家。2017年上半年谁最赚钱？谁进步神速？谁负债前行？谁又慷慨分红与股民“众乐乐”……随着昨日晚间中联重科、南华生物、湘电股份、中钨高新等湘股的上半年业绩的披露，中报披露算是收官。</p>
+							<p>今年以来，10余家湘企在A股市场成功挂牌上市，上市湘企的阵营扩大到了97家。2017年上半年谁最赚钱？谁进步神速？谁负债前行？谁又慷慨分红与股民“众乐乐”……随着昨日晚间中联重科、南华生物、湘电股份、中钨高新等湘股的上半年业绩的披露，中报披露算是收官。</p>
+							<p>今年以来，10余家湘企在A股市场成功挂牌上市，上市湘企的阵营扩大到了97家。2017年上半年谁最赚钱？谁进步神速？谁负债前行？谁又慷慨分红与股民“众乐乐”……随着昨日晚间中联重科、南华生物、湘电股份、中钨高新等湘股的上半年业绩的披露，中报披露算是收官。</p>
+                        </div>
+                    	<div class="info">综合评分：4.5&nbsp;&nbsp;&nbsp;&nbsp;查看：34次&nbsp;&nbsp;&nbsp;&nbsp;引用：5次</div>
+                        <ul class="comment">
+                        	<li>
+                            	<span>夏翠：</span>
+                                <p>我觉得有一个地方还是要调整一下，每次引用都要再手工给客户补充一部分我觉得有一个地方还是要调整一下，每次引用都要再手工给客户补充一部分我觉得有一个地方还是要调整一下，每次引用都要再手工给客户补充一部分我觉得有一个地方还是要调整一下，每次引用都要再手工给客户补充一部分我觉得有一个地方还是要调整一下，每次引用都要再手工给客户补充一部分我觉得有一个地方还是要调整一下，每次引用都要再手工给客户补充一部分内容。</p>
+                               	<em>2017-08-20 13:327&nbsp;&nbsp;&nbsp;&nbsp;评分：3.5</em>
+                            </li>
+                            <li>
+                            	<span>夏翠：</span>我觉得有一个地方还是要调整一下，每次引用都要再手工给客户补充一部分内容。
+                               	<em>2017-08-20 13:327&nbsp;&nbsp;&nbsp;&nbsp;评分：3.5</em>
+                            </li>
+                            <li>
+                            	<span>夏翠：</span>我觉得有一个地方还是要调整一下，每次引用都要再手工给客户补充一部分内容。
+                               	<em>2017-08-20 13:327&nbsp;&nbsp;&nbsp;&nbsp;评分：3.5</em>
+                            </li>
+                            <li>
+                            	<span>夏翠：</span>4我觉得有一个地方还是要调整一下，每次引用都要再手工给客户补充一部分内容。
+                               	<em>2017-08-20 13:327&nbsp;&nbsp;&nbsp;&nbsp;评分：3.5</em>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="publish_box">
+                        <textarea></textarea>
+                        <div class="info">
+                        	<p>打分:</p>
+                        	<ul class="start"> 
+                                <li></li>  
+                                <li></li>  
+                                <li></li>  
+                                <li></li>  
+                                <li></li>  
+                            </ul>  
+                        	<input type="button" value="发表评论" />    
+                        </div>
+                    	<div class="clear"></div>
+                    </div>   
+                </div>
+                <div class="clear"></div>
+            </div>
+            <!--处理诉求-end-->
+            <!--历史会话-->
+        	<div class="box" style="display:none;">
+            	历史会话
+            </div>
+            <!--历史会话-end-->
+        </div>
+        <div class="clear"></div>
+    </div>
+    <script type="text/javascript" th:src="@{/js/jquery-1.8.3.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/page.js}"></script>
+    <script type="text/javascript" th:src="@{/js/mousewheel.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/scrollbar.min.js}"></script>
+    <script type="text/javascript" th:src="@{/third/layer/3.0.3/layer.js}"></script>
+    
+    <!--滚动条效果-->
+    <script type="text/javascript">
+        　$(function() {
+				var h =$(".talk").height();
+		  	    $(".chat_box").scrollTop(h);	
+    　　　　　　  $(".list , .chat_box , #list_table , .search_list , .result_list , #pending_list , #pending_list2 , .details , #text_box").perfectScrollbar({wheelSpeed:100});
+    　　　　});   
+    </script>
+    <script type="text/javascript">
+		/*内容块左边自适应屏幕高度*/	
+		total = document.documentElement.clientHeight;
+		colHeight = total-40;
+		document.getElementById("list").style.height=colHeight+"px";
+		/*内容块中间聊天内容高度*/
+		colHeight2 = total-180;
+		document.getElementById("talk_box").style.height=colHeight2+"px";
+		/*内容块右边展示表格内容高度*/
+		colHeight3 = total-420;
+		document.getElementById("list_table").style.height=colHeight3+"px";
+		/*内容块右边搜索结果高度*/
+		colHeight4 = total-130;
+		document.getElementById("result_list").style.height=colHeight4+"px";
+		/*内容左边块待处理诉求高度*/
+		colHeight5 = total-520;
+		document.getElementById("pending_list").style.height=colHeight5+"px";
+		/*内容左边块已处理诉求高度*/
+		colHeight6 = total-520;
+		document.getElementById("pending_list2").style.height=colHeight6+"px";
+		/*内容块中间诉求详情高度*/
+		colHeight7 = total-40;
+		document.getElementById("details").style.height=colHeight7+"px";
+		/*内容块右边知识库文章高度*/
+		colHeight8 = total-450;
+		document.getElementById("text_box").style.height=colHeight8+"px";	
+		
+		$(function(){
+			$("#search_list_id").hide();
+			var bool = true;
+			$("#know_search_id").bind('input propertychange', function() {
+				var searchs = $("#know_search_id").val();
+				if(bool){
+					bool = false;
+					searchlable(searchs);
+					setTimeout(function(){
+						bool = true;
+					},500);
+				}
+			}); 
+			
+			document.onkeydown = function(e){ 
+			    var ev = document.all ? window.event : e;
+			    if(ev.keyCode==13) {
+			    	var knowWord = $("#know_search_id").val();
+					searchKnow(knowWord);
+					$("#search_list_id").hide();
+			    }
+			}
+		})
+		
+		
+		function searchlable(searchs){
+			var obj={
+				"userId":"00001",
+             	"channelType":"0",
+             	"keyWord":searchs,
+             	"areaCode":"area",
+             	"size":"5"
+			}
+			var data=JSON.stringify(obj);
+			$.ajax({
+	             type: "POST",
+	             url: "http://172.16.17.210:8080/knowledge/v1/autocomplete",
+	             data:data,
+	             dataType: "json",
+	             contentType:"application/json;charset=utf-8",
+	             success:function(data, textStatus){
+	             	if(data.resCode=="0"){
+	             		var datas = data.data;
+	             		if(datas.length>0){
+	             			$("#search_list_id").show();
+	             			var htmls="";
+	             			$.each(datas,function(i,n){
+	             				var str = n.labelValue;
+	             				htmls+='<li onClick="liToclick(this)" data-value="'+str+'">';
+	             				htmls+=str.replace(searchs,"<em>"+searchs+"</em>");
+	             				htmls+="</li>";
+	             			});
+	             			$("#search_list_id").html(htmls);
+	             			$('#search_list_id li').mouseenter(function(){
+	             				$('#search_list_id li').removeClass("new");
+	             				$(this).addClass("new");
+				            });
+	             		}else{
+	             			$("#search_list_id").hide();
+	             		}
+	             	}
+		         },
+		         error:function(XMLHttpRequest, textStatus, errorThrown){
+			     }
+        	});
+		}
+		
+		function liToclick(obj){
+			var str = $(obj).attr("data-value");
+			$("#know_search_id").val(str);
+			searchKnow(str);
+			$("#search_list_id").hide();
+		}
+		
+		function searchKnow(knowWord){
+			var obj={
+				"userId":"00001",
+             	"channelType":"0",
+             	"keyWord":knowWord,
+             	"searchType":"1",
+             	"areaCode":"area",
+             	"size":"5"
+			}
+			var data=JSON.stringify(obj);
+			$.ajax({
+	             type: "POST",
+	             url: "http://172.16.17.210:8080/knowledge/v1/search",
+	             data:data,
+	             dataType: "json",
+	             contentType:"application/json;charset=utf-8",
+	             success:function(data, textStatus){
+	             	if(data.resCode=="0"){
+	             		var datas = data.data.keylist;
+	             		if(datas.length>0){
+	             			var htmls="";
+	             			$.each(datas,function(i,n){
+	             				var str = n.title;
+	             				htmls+='<li><a href="#" onClick="showHnow(\''+n.knowId+'\')">';
+	             				htmls+=str.replace(knowWord,"<em>"+knowWord+"</em>");
+	             				htmls+='</a><p></p>';
+                                htmls+='<p>评论（4）<span><img src="/boot/img/star.png" /></span></p></li>';
+	             			});
+	             			$("#result_list_ul").html(htmls);
+	             		}else{
+	             			$("#result_list_ul").html("");
+	             		}
+	             	}
+		         },
+		         error:function(XMLHttpRequest, textStatus, errorThrown){
+			     }
+        	});
+        }
+        
+        function showHnow(kid){
+        	var obj={
+				"userId":"00001",
+             	"channelType":"0",
+             	"timestamp":new Date().getTime()
+			}
+			var data=JSON.stringify(obj);
+			$.ajax({
+	             type: "POST",
+	             url: "http://172.16.17.210:8080/knowledge/v1/Model/"+kid,
+	             data:data,
+	             dataType: "json",
+	             contentType:"application/json;charset=utf-8",
+	             success:function(data, textStatus){
+	             	if(data.resCode=="0"){
+	             		//$("body").html(data.data);
+						layer.open({
+						  type: 1,
+						  title: '',
+						  closeBtn: 1, //不显示关闭按钮
+						  shade: [0.8, '#393D49'],
+						  area: ['auto', '600px'],
+						  //shadeClose: true, //开启遮罩关闭
+						  content: data.data
+						});
+	             	}else{
+	             		layer.msg(data.resMessage);
+	             	}
+		         },
+		         error:function(XMLHttpRequest, textStatus, errorThrown){
+			     }
+        	});
+        }
+	</script> 
+</body>
+</html>

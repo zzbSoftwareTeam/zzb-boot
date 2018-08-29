@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+		<link rel="stylesheet" th:href="@{/css/bootstrap-table.min.css}"/>
+	</head>
+	<body>
+		<div class="contait">
+			<div class="QJ_pageItem clearfix">
+				<ul class="clearfix">
+					<li class="cur">服务号列表</li>
+				</ul>
+			</div>
+			<div class="QJ_pageContent">
+				<div class="QJ_content content1" >
+					<div>
+						<button type="button" class="combutton redBnt hvr-float-shadow" style="margin-top:0px;margin-bottom:5px;" onclick="addServ();">添加服务号</button>
+					</div>
+					<div class="QJ_table">
+	                    <table id="table" width="100%" class="table table-striped table-no-bordered table-hover">
+	                        
+	                    </table>
+	                    <form id="toForm" th:action="@{/toPush}" th:method="post" th:object="${service}">
+	                   		<input type="hidden" name="id" id="ids"/>
+	                    	<input type="hidden" name="appid" id="appids"/>
+	                    	<input type="hidden" name="secret" id="secrets"/>
+	                    	<input type="hidden" name="grantType" id="grantTypes"/>
+	                    </form>
+	                </div>
+				</div>
+			</div>
+		</div>
+		<div id="serHao" hidden>
+		<form id="addForm" th:action="@{/add}" th:method="post" th:object="${service}">
+			<div class="serName" style="margin-top:20px;">
+				<label>服务号名称：</label>
+				<input type="text" name="appname"/>
+			</div>
+			<div class="serName">
+				<label>APPID：</label>
+				<input type="text" name="appid"/>
+			</div>
+			<div class="serPasword">
+				<label>SECRET：</label>
+				<input type="text" name="secret"/>
+			</div>
+			<div class="bntDiv">
+				<button type="button" class="combutton hvr-float-shadow redBnt" onclick="save()">添加</button>
+				<button type="button" class="combutton hvr-float-shadow greyBnt" onclick="clbuts()">取消</button>
+			</div>
+		</form>
+		</div>
+	</body>
+	<script th:src="@{/third/jquery/jquery-3.2.1.min.js}"></script>
+	<script th:src="@{/third/bootstrap/3.3.5/js/bootstrap.min.js}"></script>
+	<script th:src="@{/third/bootstrap-table/1.9.1/bootstrap-table.min.js}"></script>
+	<script	th:src="@{/third/bootstrap-table/1.9.1/locale/bootstrap-table-zh-CN.min.js}"></script>
+	<script th:src="@{/third/layer/3.0.3/layer.js}"></script>
+	<script>
+	</script>
+</html>

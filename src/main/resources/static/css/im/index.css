@@ -1,0 +1,203 @@
+.h-left {
+    width: 583px;
+    margin: 0 auto;
+    border: 1px #ddd solid;
+    border-radius: 8px;
+}
+.tips {
+    padding: 10px 10px 10px 10px;
+    background: #3f7ab5 url(../../img/im/zsk_left_bg01.png) no-repeat left top;
+    font: 16px/45px "微软雅黑";
+    color: #fff;
+}
+.hl-box {
+    padding: 6px 8px 10px 8px;
+    background: #fff url(../../img/im/zsk_left_bg02.png) no-repeat left bottom;
+    overflow: hidden;
+}
+.hl-main {
+    margin-bottom: 10px;
+    background: url(../../img/im/zsk_left_con_bg.png) no-repeat 212px 155px;
+    overflow: hidden;
+}
+.hl-con {
+    padding-top: 10px;
+    background: url(../../img/im/zsk_left_stxt_bg01.png) no-repeat;
+}
+.hl-con .bg {
+    padding: 0 6px 3px 2px;
+    background: #f9f9f9 url(../../img/im/zsk_left_stxt_bg02.png) no-repeat left bottom;
+}
+.hl-con .edu {
+    padding-right: 16px;
+    height: 385px;
+    overflow-y: scroll;
+}
+.ans {
+    clear: both;
+    padding-top: 20px;
+}
+.ansimg {
+    float: left;
+    width: 48px;
+}
+.ask {
+    clear: both;
+    padding-top: 20px;
+}
+.askimg {
+    float: right;
+    width: 48px;
+}
+.triangle-border-blue.right {
+    margin-right: 30px;
+    max-width: 400px;
+}
+.triangle-border-blue {
+    position: relative;
+    float: right;
+    padding: 15px;
+    border: 1px solid #0c91d5;
+    color: #333;
+    background: #0c91d5;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+.triangle-border-blue.right:before {
+    top: 10px;
+    bottom: auto;
+    left: auto;
+    right: -30px;
+    border-width: 15px 0 15px 30px;
+    border-color: transparent #0c91d5;
+}
+.triangle-border-blue.right:after {
+    top: 12px;
+    bottom: auto;
+    left: auto;
+    right: -30px;
+    border-width: 13px 0 13px 30px;
+    border-color: transparent #0c91d5;
+}
+.triangle-border.left {
+    margin-left: 30px;
+    width: 400px;
+}
+.triangle-border {
+    position: relative;
+    float: left;
+    padding: 15px;
+    border: 1px solid #ddd;
+    color: #333;
+    background: #fff;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+.triangle-border.left:before {
+    top: 10px;
+    bottom: auto;
+    left: -30px;
+    border-width: 15px 30px 15px 0;
+    border-color: transparent #ddd;
+}
+.triangle-border.left:after {
+    top: 12px;
+    bottom: auto;
+    left: -30px;
+    border-width: 13px 30px 13px 0;
+    border-color: transparent #fff;
+}
+.write {
+    padding-bottom: 10px;
+    background: url(../../img/im/zsk_left_txt_bg02.png) no-repeat left bottom;
+}
+.write .bg {
+    padding-top: 10px;
+    background: url(../../img/im/zsk_left_txt_bg01.png) no-repeat;
+}
+.wr-box {
+    padding: 0 25px 8px 25px;
+    background: #f9f9f9;
+    border-left: 1px solid #f19784;
+    border-right: 1px solid #f19784;
+    height: 100px;
+}
+.wr-text {
+    height: 60px;
+    position: relative;
+}
+.wr-text .txt {
+    width: 515px;
+    height: 58px;
+    background: #f9f9f9;
+    border: medium none;
+    font: 14px "微软雅黑";
+    color: #333;
+    outline: none;
+    vertical-align: top;
+}
+.wr-tips li {
+    height: 32px;
+    list-style: none;
+}
+.wr-tips li a {
+    display: inline-block;
+    padding: 0 26px;
+    width: 513px;
+    height: 32px;
+    font: 14px/32px "微软雅黑";
+    color: #666;
+    text-decoration: none;
+}
+.wr-btn {
+    margin-top: 10px;
+    height: 31px;
+}
+.clearfix {
+    zoom: 1;
+}
+.wr-btn span {
+    display: inline-block;
+    float: left;
+    padding-left: 22px;
+    background: url(../../img/im/zsk_left_txt_ico.png) no-repeat left center;
+    font: 12px/31px "微软雅黑";
+    color: #999;
+}
+.wr-btn span label {
+    margin: 0 3px;
+    font: bold 12px/31px "微软雅黑";
+    color: #ed674c;
+}
+.wr-btn a {
+    display: inline-block;
+    float: right;
+    width: 90px;
+    height: 31px;
+    background: #ef826c;
+    text-align: center;
+    font: 12px/31px "微软雅黑";
+    color: #fff;
+    text-decoration: none;
+}
+.wr-btn a:hover{
+	background: #ed674c;
+}
+.clearfix:after {
+    content: '.';
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+.wr-tips {
+    position: absolute;
+    left: -26px;
+    bottom: 72px;
+    width: 110%;
+    padding-left: 0;
+    background: #fff;
+    border: 1px solid #f19784;
+}

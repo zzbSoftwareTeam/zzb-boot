@@ -1,0 +1,238 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>宏控件</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
+    <meta name="generator" content="www.leipi.org" />
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <!--[if lte IE 6]>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-ie6.css">
+    <![endif]-->
+    <!--[if lte IE 7]>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/ie.css">
+    <![endif]-->
+    <link rel="stylesheet" href="leipi.style.css">
+    <script type="text/javascript" src="../dialogs/internal.js"></script>
+    <script type="text/javascript">
+function createElement(type, name)
+{     
+    var element = null;     
+    try {        
+        element = document.createElement('<'+type+' name="'+name+'">');     
+    } catch (e) {}   
+    if(element==null) {     
+        element = document.createElement(type);     
+        element.name = name;     
+    } 
+    return element;     
+}
+    </script>
+</head>
+<body>
+<div class="content">
+    <table class="table table-bordered table-striped table-hover">
+    <input type="hidden" id="oldfieldname" />
+        <tr>
+            <th><span>字段名称（字母、_、数字）</span><span class="label label-important">*</span></th>
+            <th><span>字段标题</span><span class="label label-important">*</span></th>
+        </tr>
+        <tr>
+            <td>
+                <input id="fieldname" type="text" placeholder="必填项"/>
+            </td>
+            <td>
+                <input id="orgname" type="text" placeholder="必填项"/>
+            </td>
+        </tr>
+    	 <tr>
+            <th colspan="2"><span>类型</span></th>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <select  id="orgtype" class="span12" onchange="changtype(this)" >
+                    <optgroup label="----常用日期宏控件----">
+                        <option value="@{sys_datetime}@">客户端日期+时间 [ yyyy-MM-dd HH:mm:ss ]</option>
+                        <option value="@{sys_date_l}@">客户端日期 [ yyyy-MM-dd ]</option>
+                        <option value="@{sys_date}@">客户端日期 [ yyyy-MM ]</option>
+                        <option value="@{database_datetime}@">系统日期+时间 [ yyyy-MM-dd HH:mm:ss ]</option>
+                        <option value="@{database_date}@">系统日期 [ yyyy-MM-dd ]</option>
+                    </optgroup>
+                    <optgroup label="----常用系统参数----">
+                        <option value="@{sys_userid}@">当前用户ID</option>
+                        <option value="@{sys_username}@">当前用户姓名</option>
+                        <option value="@{sys_user_deptid}@">当前用户部门ID</option>
+                        <option value="@{sys_user_deptname}@">当前用户部门名称</option>
+                        <option value="@{sys_user_role}@">当前用户角色ID</option>
+                    </optgroup>
+                    <!--<optgroup label="----接续参数----">
+                        <option value="@{call_caller_no}@">当前来电号码</option>
+                        <option value="@{call_ivr_callid}@">当前来电IVR_CALLID</option>
+                        <option value="@{call_cti_callid}@">当前来电CTI_CALLID</option>
+                        <option value="@{call_ivr_date}@">当前来电IVR_DATE</option>
+                    </optgroup>   --> 
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th><span>控件样式</span></th>
+            <th><span>可见性</span></th>
+        </tr>
+        <tr>
+            <td>
+                宽 <input id="orgwidth" type="text" value="" class="input-small span1" placeholder="auto"/> px
+                &nbsp;&nbsp;
+                字体大小 <input id="orgfontsize" type="text" value="" class="input-small span1" placeholder="auto"/> px
+                
+            </td>
+            <td>
+                <label class="checkbox"> <input id="orghide" type="checkbox"> 隐藏 </label>
+            </td>
+        </tr>
+    </table>
+</div>
+<script type="text/javascript">
+var oNode = null,thePlugins = 'macros';
+window.onload = function() {
+    if( UE.plugins[thePlugins].editdom ) {
+        oNode = UE.plugins[thePlugins].editdom;
+        var gTitle=oNode.getAttribute('title').replace(/&quot;/g,"\""),gHidden=oNode.getAttribute('orghide'),gFontSize=oNode.getAttribute('orgfontsize'),
+        gWidth=oNode.getAttribute('orgwidth'),gType=oNode.getAttribute('orgtype'),gName=oNode.getAttribute('fieldname');
+        gTitle = gTitle==null ? '' : gTitle;
+        $G('orgname').value = gTitle;
+        //if( oNode.tagName == 'INPUT' ) {}
+        if(oNode.getAttribute('orghide')=='1'){
+            $G('orghide').checked = true;
+        }
+        $G('orgname').value    = gTitle;
+        $G('orgtype').value    = gType; 
+        $G('orgwidth').value = gWidth;
+        $G('fieldname').value = gName;
+        $G('orgfontsize').value = gFontSize;
+        $G('oldfieldname').value = gName;
+    }
+}
+
+dialog.oncancel = function () {
+    if( UE.plugins[thePlugins].editdom ) {
+        delete UE.plugins[thePlugins].editdom;
+    }
+};
+dialog.onok = function (){
+	var gName=$G('fieldname').value,
+		ofn = $G('oldfieldname').value;
+	if( gName == '') {
+	    alert('字段名称不能为空');
+	    return false;
+	}
+	if(!/^[A-Za-z]\w{0,29}$/.test(gName)){
+		alert('字段名称只能是字母、_、数字且以字母开头，长度在30以内');
+	    return false;
+	}
+    if ( $G('orgname').value == '' ) {
+        alert('字段标题不能为空');
+        return false;
+    }
+    if(ofn != gName && !existField(gName)){
+    	alert('字段名称已经存在');
+    	$G('fieldname').focus();
+        return false;
+    }
+    var gTitle=$G('orgname').value.replace(/\"/g,"&quot;"),gFontSize=$G('orgfontsize').value,
+    	gWidth=$G('orgwidth').value,gType=$G('orgtype').value;
+    if( !oNode ) {
+        try {
+                /*
+                if ( $G('orgtype').value.indexOf('sys_list')>0 ) {
+                    oNode = document.createElement("select");
+                    var objOption = new Option('{macros}', '');
+                    oNode.options[oNode.options.length] = objOption;
+                } else {
+                    //input
+                }*/
+                oNode = createElement('input','NEWFIELD');
+                oNode.setAttribute('type','text');
+                oNode.setAttribute('value',gType);
+                
+                oNode.setAttribute('title',gTitle);
+                oNode.setAttribute('name','NEWFIELD');
+                oNode.setAttribute('fieldname',gName);
+                oNode.setAttribute('readonly','readonly');
+                oNode.setAttribute('plugins',thePlugins);
+                oNode.setAttribute('orgtype',gType); 
+                oNode.setAttribute('orgvalue','${'+gName.toUpperCase()+'}');
+                if( $G('orghide').checked ) {
+                    oNode.setAttribute('orghide', '1' ) ;
+                } else {
+                    oNode.setAttribute('orghide', '0' ) ;
+                }
+                if( gFontSize != '' ) {
+                    oNode.style.fontSize = gFontSize + 'px';
+                    oNode.setAttribute('orgfontsize',gFontSize );
+                }
+                if( gWidth != '' ) {
+                    oNode.style.width = gWidth + 'px';
+                    oNode.setAttribute('orgwidth',gWidth );
+                }
+                editor.execCommand('insertHtml',oNode.outerHTML);
+                return true;
+            } catch ( e ) {
+                try {
+                    editor.execCommand('error');
+                } catch ( e ) {
+                    alert('控件异常，请联系管理员寻求帮助！');
+                }
+                return false;
+            }
+    } else {
+        var norgname = oNode.getAttribute('name').replace(/\"/g,"&quot;");
+        var oNewNode = null;
+        domUtils.remove(oNode,false);  //删除当前控件，再创建一个新的
+        /*
+        if ( $G('orgtype').value.indexOf('sys_list') > 0 ) {
+            oNewNode = document.createElement("select");
+            var objOption = new Option('{macros}', '');
+            oNewNode.options[oNewNode.options.length] = objOption;
+        }*/
+        oNewNode = createElement('input','NEWFIELD');
+        oNewNode.setAttribute('type','text');
+        oNewNode.setAttribute('value',gType);
+        oNewNode.setAttribute('title',gTitle);
+        oNewNode.setAttribute('name',norgname);
+        oNewNode.setAttribute('fieldname',gName);
+        oNode.setAttribute('readonly','readonly');
+        oNewNode.setAttribute('plugins',thePlugins ); 
+        oNewNode.setAttribute('orgtype',gType); 
+        oNode.setAttribute('orgvalue','${'+gName.toUpperCase()+'}');
+        if( $G('orghide').checked ) {
+            oNewNode.setAttribute('orghide', '1' ) ;
+        } else {
+            oNewNode.setAttribute('orghide', '0' ) ;
+        }
+        if( gFontSize != '' ) {
+            oNewNode.style.fontSize = gFontSize + 'px';
+            oNewNode.setAttribute('orgfontsize',gFontSize );
+        }else{
+            oNewNode.setAttribute('orgfontsize', '');
+        }
+        if( gWidth != '' ) {
+            oNewNode.style.width = gWidth + 'px';
+            oNewNode.setAttribute('orgwidth',gWidth );
+        }else{
+            oNewNode.setAttribute('orgwidth', '');
+        }
+        editor.execCommand('insertHtml',oNewNode.outerHTML);
+        delete UE.plugins[thePlugins].editdom;
+    }
+};
+function changtype(obj){
+	var _val = obj.value;
+	if(_val != "@{sys_date}@" && _val != "@{sys_datetime}@"){
+		$G('orghide').checked = true;
+	}else{
+		$G('orghide').checked = false;
+	}
+}
+</script>
+</body>
+</html>

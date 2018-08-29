@@ -1,0 +1,196 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>复选框</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1" >
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <!--[if lte IE 6]>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap-ie6.css">
+    <![endif]-->
+    <!--[if lte IE 7]>
+    <link rel="stylesheet" type="text/css" href="bootstrap/css/ie.css">
+    <![endif]-->
+    <link rel="stylesheet" href="leipi.style.css">
+    <script type="text/javascript" src="../dialogs/internal.js"></script>
+    <script type="text/javascript">
+function createElement(type, name)
+{     
+    var element = null;     
+    try {        
+        element = document.createElement('<'+type+' name="'+name+'">');     
+    } catch (e) {}   
+    if(element==null) {     
+        element = document.createElement(type);     
+        element.name = name;     
+    } 
+    return element;     
+}
+    </script>
+</head>
+<body>
+<div class="content">
+    <table class="table table-bordered table-striped table-hover">
+    <input type="hidden" id="oldfieldname" />
+     <tr>
+        <th><span>字段名称（字母、_、数字）</span><span class="label label-important">*</span></th>
+        <th><span>字段标题</span><span class="label label-important">*</span></th>
+    </tr>
+    <tr>
+        <td><input id="fieldname" placeholder="必填项" type="text"/></td>
+        <td>
+            <input id="orgname" placeholder="必填项" type="text"/> 
+        </td>
+    </tr>
+     <tr>
+     	<th><span>选中状态</span></th>
+        <th><span>必选项</span></th>
+    </tr>
+    <tr>
+        <td>
+            <label class="radio"><input id="orgchecked0" checked="checked" name="checked" type="radio"> 不选中 </label>
+            <label class="radio"><input id="orgchecked1" name="checked" type="radio"> 选中 </label>
+        </td>
+        <td><label class="checkbox inline"><input id="required" type="checkbox"/> 必选项</label> </td>
+    </tr>
+    <tr>
+     	<th><span>流程变量</span></th>
+        <th><span>列表显示</span></th>
+    </tr>
+    <tr>
+        <td>
+            <label class="checkbox inline"><input id="fieldflow" type="checkbox"/> 流程变量</label> 
+        </td>
+        <td><label class="checkbox inline"><input id="show" type="checkbox"/> 列表显示</label> </td>
+    </tr>
+    </table>
+</div>
+<script type="text/javascript">
+var oNode = null,thePlugins = 'checkbox';
+window.onload = function() {
+    if( UE.plugins[thePlugins].editdom ){
+        oNode = UE.plugins[thePlugins].editdom;
+        var gTitle=oNode.getAttribute('title').replace(/&quot;/g,"\""),
+        	gName = oNode.getAttribute('fieldname').replace(/&quot;/g,"\""),
+        	gFlow=oNode.getAttribute('fieldflow'),
+        	gShow=oNode.getAttribute('show'),
+        	gRequired=oNode.getAttribute('required');
+        $G('orgname').value = gTitle;
+        $G('fieldname').value = gName;
+        $G('oldfieldname').value = gName;
+        if (gFlow == '1')
+        {
+            $G('fieldflow').checked = true;
+        }
+        if (gShow == '1')
+        {
+            $G('show').checked = true;
+        }
+        if (gRequired == '1')
+        {
+            $G('required').checked = true;
+        }
+        var checked = oNode.getAttribute('checked');
+        checked ? $G('orgchecked1').checked = true : $G('orgchecked0').checked = true;
+    }
+}
+dialog.oncancel = function () {
+    if( UE.plugins[thePlugins].editdom ) {
+        delete UE.plugins[thePlugins].editdom;
+    }
+};
+dialog.onok = function (){
+	var gName=$G('fieldname').value,
+		ofn = $G('oldfieldname').value;
+	if( gName == '') {
+	    alert('字段名称不能为空');
+	    return false;
+	}
+	if(!/^[A-Za-z]\w{0,29}$/.test(gName)){
+		alert('字段名称只能是字母、_、数字且以字母开头，长度在30以内');
+	    return false;
+	}
+    if( $G('orgname').value == '') {
+        alert('字段标题不能为空');
+        return false;
+    }
+    if(ofn != gName && !existField(gName)){
+    	alert('字段名称已经存在');
+    	$G('fieldname').focus();
+        return false;
+    }
+    var gTitle=$G('orgname').value.replace(/\"/g,"&quot;");
+    
+    //新增
+    if( !oNode ) {
+        try {
+            oNode = createElement('input','NEWFIELD');
+            oNode.setAttribute('title',gTitle);//字段标题
+            oNode.setAttribute('plugins',thePlugins );//控件类型
+            oNode.setAttribute('name','NEWFIELD' );//名称
+            oNode.setAttribute('fieldname',gName );//字段名称
+            oNode.setAttribute('type', 'checkbox');//类型
+            oNode.setAttribute('orgvalue', '${'+gName.toUpperCase()+'}');//占位符
+            oNode.setAttribute('value', 'Y');
+            if ($G('orgchecked1').checked) {//是否选中
+                oNode.setAttribute('checked','checked');
+            } else {
+                oNode.checked = false;
+            }
+            if ( $G('fieldflow').checked ) {//流程变量
+                oNode.setAttribute('fieldflow',1);
+            } else {
+                oNode.setAttribute('fieldflow',0);
+            }
+            if ( $G('show').checked ) {//列表显示
+                oNode.setAttribute('show',1);
+            } else {
+                oNode.setAttribute('show',0);
+            }
+            if ( $G('required').checked ) {//是否必须
+                oNode.setAttribute('required',1);
+            } else {
+                oNode.setAttribute('required',0);
+            }
+            editor.execCommand('insertHtml',oNode.outerHTML+gTitle);
+            return true ;
+        } catch ( e ) {
+            try {
+                editor.execCommand('error');
+            } catch ( e ) {
+                alert('控件异常，请联系技术支持');
+            }
+            return false;
+        }
+    } else {
+        oNode.setAttribute('title',gTitle);
+        oNode.setAttribute('fieldname',gName );//字段名称
+        oNode.setAttribute('orgvalue', '${'+gName.toUpperCase()+'}' );//占位符
+        oNode.setAttribute('value', 'Y');
+        if ($G('orgchecked1').checked) {
+            oNode.setAttribute('checked','checked');
+        } else {
+            oNode.removeAttribute('checked');
+        }
+        if ( $G('fieldflow').checked ) {//流程变量
+            oNode.setAttribute('fieldflow',1);
+        } else {
+            oNode.setAttribute('fieldflow',0);
+        }
+        if ( $G('show').checked ) {//列表显示
+            oNode.setAttribute('show',1);
+        } else {
+            oNode.setAttribute('show',0);
+        }
+        if ( $G('required').checked ) {//是否必须
+            oNode.setAttribute('required',1);
+        } else {
+            oNode.setAttribute('required',0);
+        }
+        delete UE.plugins[thePlugins].editdom; 
+        return true;
+    }
+};
+</script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+.QJ_pageItem {border-bottom: 1px solid #afb0b0;padding-left: 52px;height: 50px;background: #434a53;color: white;}
+.QJ_pageItem ul {margin: 0;}
+.QJ_pageItem li {float: left;line-height: 47px;margin-right: 40px;cursor: pointer;font-size: 16px;}
+.QJ_pageItem li.cur,.QJ_pageItem li:hover {border-bottom: 3px solid #F45B4B;}
+.QJ_pageContent {padding: 20px;}
+.QJ_table{font-size: 12px;}
+.QJ_table table{border:1px solid #e4e4e4;}
+.QJ_table table thead{background-color: #eff0f1;}
+.QJ_table table tr th{color:#000;}
+.QJ_table table tr th,.QJ_table table tr td{padding: 8px;text-align: center;border-bottom-width:1px; font-weight: normal;vertical-align:middle;}
+.QJ_table input.tableInput{width: 170px;height:20px;border:1px solid #e4e4e4;border-radius: 4px;font-size: 12px;}
+.table-striped>tbody>tr:nth-of-type(odd){background-color:#fff;}
+.table-hover>tbody>tr:hover{background-color:#f6f7f8;}
+.table-hover>tbody>tr.active{background-color:#e8ecef;}
+.bootstrap-table .table.table-no-bordered>tbody>tr>td:last-child, .bootstrap-table .table.table-no-bordered>thead>tr>th:last-child{border-right:1px solid #e4e4e4;}
+.divTil label,.divTil2 label{width: 4em;font-weight: normal;}
+.divbox,.divbox2{float: left;margin: 0 auto;}
+.title{margin-bottom: 9px;height: 30px;line-height: 30px;border-bottom: 1px solid #d3d0d0;}
+.divbox2,.divbox{width: 400px;border: 1px solid #d3d0d0;padding: 10px;border-radius: 10px;}
+.bigDiv{width: 850px;margin: 20px auto;}
+.divbox2 p{color: #e7e7e7;}
+.divbox2{margin-left: 50px;}
+.divTil {margin-top: 9px;}
+.longInp{width: 252px;border-radius: 6px;border: 1px solid #c7c4c4;height: 26px;outline: none;}
+.combutton{width: 80px;height: 28px;border: none;border-radius: 4px;margin-top:15px;}
+.redBnt{background-color: #F45B4B;color: white;}
+.greyBnt{background-color: grey;color: white;margin-left: 30px;}
+.bntDiv{width:195px;margin: 0 auto;}

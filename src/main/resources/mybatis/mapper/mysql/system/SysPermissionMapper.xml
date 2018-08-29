@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzb.module.system.dao.SysPermissionDao">
+
+	<select id="findAll" resultType="com.zzb.module.system.entity.SysPermission">
+        select * from sys_permission
+    </select>
+    
+    <select id="findByUserId" parameterType="java.lang.Long" resultType="com.zzb.module.system.entity.SysPermission">
+        select sp.id id,sp.pid pid,sp.per_name perName,sp.url url,sp.description description 
+        from sys_permission sp
+        <!-- left join sys
+        where user_id = #{userId} -->
+    </select>
+</mapper>

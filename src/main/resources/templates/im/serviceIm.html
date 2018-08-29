@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>即时通讯</title>
+	<link rel="stylesheet" th:href="@{/css/im/index.css}" />
+</head>
+<body>
+	<!--左侧开始-->
+<div class="h-left">
+   	<p class="tips">您好，欢迎使用“湖南省人民政府”智能政务知识库系统，为您提供的智能咨询服务。</p>
+       <div class="hl-box">
+       	<div class="hl-main">
+           <!--搜索内容开始-->
+           	<div class="hl-con">
+               	<div class="bg">
+                   	<div class="edu" id="obj-panel"> 
+                      </div>
+                   </div>	
+               </div>
+            <!--搜索内容结束--> 
+          </div>
+           <!--输入区域开始-->
+            <div class="write">
+            	<div class="bg">
+               	<div class="wr-box">
+                   	<div class="wr-text">
+                           <input type="text" class="txt" placeholder="精简输入，精彩纷呈..." id="shuru"/>
+                       </div>
+                       <div class="wr-btn clearfix">
+                       	<span>您还可输入<label id="chLeft">40</label>字</span>
+                       	<a id="submit" href="javascript:void(0);" onclick="send();">提交</a>
+                       </div>
+                   </div>
+               </div>
+            </div>
+            <!--输入区域结束-->
+       </div>
+   </div>
+<!--左侧结束-->
+</body>
+<script type="text/javascript" th:src="@{/third/jquery/jquery-1.11.1.min.js}"></script>
+<script type="text/javascript" th:src="@{/third/sockjs/1.1.4/sockjs.min.js}"></script>
+<script type="text/javascript" th:src="@{/third/stomp/stomp.min.js}"></script>
+<script th:src="@{/third/layer/3.0.3/layer.js}"></script>
+<script th:inline="javascript">
+/*<![CDATA[*/
+var userName=/*[[${session.SPRING_SECURITY_CONTEXT.authentication.name}]]*/ null;
+/*]]>*/
+
+var sock = new SockJS("/websocket");
+var stomp = Stomp.over(sock);
+  
+stomp.connect({},//用户名密码 
+	function(frame) {//连接成功回调
+	//使用user 才会发送消息到指定的用户
+		stomp.subscribe("/user/queue_im", getMessage);
+		stomp.send("/ws/queue_toService", {}, JSON.stringify({'user':userName,'message': 'running','date':new Date()}));
+	},function(error) {//连接失败回调
+		layer.msg("连接失败:"+error);
+	}
+);
+
+function getMessage(msgObj) {
+	console.log(msgObj);
+	var obj = JSON.parse(msgObj.body);
+	var url=/*[[@{/img/im/robot.png}]]*/ null;
+    $('#obj-panel').append('<div class="ans"><img class="ansimg" src="'+url+'"/>'+
+    					'<div class="triangle-border left">'+obj.message+'</div></div>');
+}
+
+
+
+function send(){
+	var url = /*[[@{/img/im/head3.jpg}]]*/ null;
+   	var text=$("#shuru").val();
+   	stomp.send("/ws/queue_transfer", {}, JSON.stringify({'user':userName,'message': text,'date':new Date()}));
+   	$('#obj-panel').append('<div class="ask"><img class="askimg" src="'+url+'">'+
+                       	'<p class="triangle-border-blue right">'+text+'</p></div>');
+    $("#shuru").val("");
+    $("#shuru").text("");               	
+}
+$(document).keyup(function(event){
+  if(event.keyCode ==13){
+    send();
+  }
+});   
+</script>
+</html>

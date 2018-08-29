@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>登录页面</title>
+		<link rel="stylesheet" th:href="@{/css/reset.css}" />
+		<link rel="stylesheet" th:href="@{/css/login.css}" />
+		<link rel="stylesheet" th:href="@{/css/hover-min.css}" />
+	</head>
+	<body>
+		<div class="loginWin">
+	        <h1>欢迎登录</h1>
+	        <form th:action="@{/login}" th:method="post" th:object="${user}">
+	            <div class="row">
+	                <input type="text" name="userName" placeholder="用户名">
+	            </div>
+	            <div class="row passRow">
+	                <input type="password" name="userPass" placeholder="密码">
+	            </div>
+	            <div class="row btnRow">
+	                <button class="loginBtn hvr-float-shadow" type="submit">登录</button>
+	            </div>
+	        </form>
+	    </div>
+	</body>
+	<script th:src="@{/third/jquery/jquery-3.2.1.min.js}"></script>
+	<script th:src="@{/third/layer/3.0.3/layer.js}"></script>
+	<script th:inline="javascript">
+	/*<![CDATA[*/
+	var ecxeption=/*[[${session.SPRING_SECURITY_LAST_EXCEPTION}]]*/ null;
+	/*]]>*/
+	console.log(ecxeption);
+	if(ecxeption!=null){
+		layer.msg('用户名/密码不正确！', {icon: 5});
+	}
+	</script>
+</html>
