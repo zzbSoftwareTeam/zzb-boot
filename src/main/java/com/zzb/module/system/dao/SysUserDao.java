@@ -7,7 +7,17 @@ import com.zzb.module.system.entity.SysUser;
 
 @Mapper
 public interface SysUserDao {
+    int deleteByPrimaryKey(String id);
 
-	public SysUser findByUserName(@Param("name") String name);
+    int insert(SysUser record);
 
+    int insertSelective(SysUser record);
+
+    SysUser selectByPrimaryKey(String id);
+
+    int updateByPrimaryKeySelective(SysUser record);
+
+    int updateByPrimaryKey(SysUser record);
+    
+    SysUser findByUserName(@Param("name") String name);
 }

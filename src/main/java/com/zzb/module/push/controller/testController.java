@@ -1,36 +1,7 @@
 package com.zzb.module.push.controller;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
-import javax.jms.Destination;
-import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.MessageConsumer;
-import javax.jms.MessageListener;
-import javax.jms.Queue;
-import javax.jms.QueueBrowser;
-import javax.jms.QueueConnection;
-import javax.jms.Session;
-import javax.jms.Topic;
-import javax.management.MBeanServerInvocationHandler;
-import javax.management.ObjectName;
-
-import org.apache.activemq.ActiveMQConnectionFactory;
-import org.apache.activemq.advisory.DestinationSource;
-import org.apache.activemq.broker.Broker;
-import org.apache.activemq.broker.BrokerService;
-import org.apache.activemq.broker.jmx.BrokerView;
-import org.apache.activemq.broker.jmx.BrokerViewMBean;
-import org.apache.activemq.broker.jmx.QueueView;
-import org.apache.activemq.broker.jmx.QueueViewMBean;
-import org.apache.activemq.command.ActiveMQDestination;
-import org.apache.activemq.command.ActiveMQMessage;
-import org.apache.activemq.command.ActiveMQObjectMessage;
-import org.apache.activemq.command.ActiveMQQueue;
-import org.apache.activemq.command.ActiveMQTextMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,10 +36,6 @@ public class testController {
 	private JmsTemplate jmsTemplate;
 	@Autowired
 	private JmsMessagingTemplate jmsMessagingTemplate;
-	@Autowired
-	private ActiveMQService activeMQService;
-	@Autowired
-    private Queue queueService;
     @Autowired
     private HanLPService hanLPService;
     @Autowired
@@ -83,20 +50,6 @@ public class testController {
 		
 		System.out.println(redisService.containsValueKey("aaaa"));
 		return "redis";
-	}
-	
-	@RequestMapping("/activemq")
-	public String activemq() throws JsonProcessingException{
-		jmsMessagingTemplate.convertAndSend(queueService, "zzb1");
-		jmsTemplate.convertAndSend(queueService, "zzb2");
-		jmsTemplate.convertAndSend(queueService, "zzb3");
-		return "activemq";		
-	}
-	
-	@RequestMapping("/getmq")
-	public String getmq() throws Exception{
-		long userint = activeMQService.getQueueSize("queue_user");
-		return "getmq="+userint;  
 	}
 	
 	@RequestMapping(path = "/toBaidu", method = RequestMethod.POST)  

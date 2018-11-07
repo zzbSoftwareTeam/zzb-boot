@@ -5,8 +5,6 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
 
 /**
  * war打包，用于war部署
- * @author dy
- *
  * @date 2017年6月9日上午8:59:06
  */
 public class ServletInitializer extends SpringBootServletInitializer{

@@ -44,17 +44,18 @@
 <script type="text/javascript" th:src="@{/third/stomp/stomp.min.js}"></script>
 <script th:src="@{/third/layer/3.0.3/layer.js}"></script>
 <script th:inline="javascript">
-/*<![CDATA[*/
-var userName=/*[[${session.SPRING_SECURITY_CONTEXT.authentication.name}]]*/ null;
-/*]]>*/
-var sock = new SockJS("/websocket");
+
+var userName=null;
+
+var sock = new SockJS("/websocket?token=aaaa");
 var stomp = Stomp.over(sock);
-  
+var sessionId="";
 stomp.connect({},//用户名密码 
 	function(frame) {//连接成功回调
-	//使用user 才会发送消息到指定的用户
-		stomp.subscribe("/user/queue_im", getMessage);
-		stomp.send("/ws/queue_toUser", {}, JSON.stringify({'user':userName,'message': 'running','date':new Date()}));
+		//使用user 才会发送消息到指定的用户
+		var headers = {ack: 'client'/* , 'id': mysubid */};
+		stomp.subscribe("/user/queue_im", getMessage,headers);
+		stomp.send("/ws/queue_toUser", {id: 'aaaaa'}, "{}");
 	},function(error) {//连接失败回调
 		layer.msg("连接失败:"+error);
 	}
@@ -63,9 +64,18 @@ stomp.connect({},//用户名密码
 function getMessage(msgObj) {
 	console.log(msgObj);
 	var obj = JSON.parse(msgObj.body);
-	var url=/*[[@{/img/im/robot.png}]]*/ null;
-    $('#obj-panel').append('<div class="ans"><img class="ansimg" src="'+url+'"/>'+
+	if(obj.status=="one"){
+		sessionId = obj.msessionId;
+		stomp.send("/ws/user_callback", {}, JSON.stringify({'msessionId':sessionId}));
+		var url=/*[[@{/img/im/robot.png}]]*/ null;
+    	$('#obj-panel').append('<div class="ans"><img class="ansimg" src="'+url+'"/>'+
     					'<div class="triangle-border left">'+obj.message+'</div></div>');
+	}else{
+		var url=/*[[@{/img/im/robot.png}]]*/ null;
+    	$('#obj-panel').append('<div class="ans"><img class="ansimg" src="'+url+'"/>'+
+    					'<div class="triangle-border left">'+obj.message+'</div></div>');
+    }
+    //message.ack();
 }
 
 
@@ -73,7 +83,7 @@ function getMessage(msgObj) {
 function send(){
 	var url = /*[[@{/img/im/head3.jpg}]]*/ null;
    	var text=$("#shuru").val();
-   	stomp.send("/ws/queue_transfer", {}, JSON.stringify({'user':userName,'message': text,'date':new Date()}));
+   	stomp.send("/ws/queue_transfer", {}, JSON.stringify({'msessionId':sessionId,'message': text,'date':new Date()}));
    	$('#obj-panel').append('<div class="ask"><img class="askimg" src="'+url+'">'+
                        	'<p class="triangle-border-blue right">'+text+'</p></div>');
     $("#shuru").val("");

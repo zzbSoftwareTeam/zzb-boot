@@ -46,16 +46,12 @@ import org.w3c.dom.Document;
 
 import com.zzb.BootApplication;
 import com.zzb.common.utils.CodecUtils;
-import com.zzb.module.system.dao.SysPermissionDao;
-import com.zzb.module.system.entity.SysPermission;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = BootApplication.class)
 @WebAppConfiguration
 public class DemoTest {
 	
-	@Autowired
-	SysPermissionDao pdao;
 	
 	@Test
 	public void text1(){

@@ -27,8 +27,8 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
 		// 获得授权后可得到用户信息 可使用Service进行数据库操作
-		Object obj=authentication.getCredentials();
-		Object obj1=authentication.getDetails();
+		//Object obj=authentication.getCredentials();
+		//Object obj1=authentication.getDetails();
 		User userDetails=(User) authentication.getPrincipal();
 		SysUser user = sysUserDao.findByUserName(userDetails.getUsername());
 		Collection<? extends GrantedAuthority> auths=authentication.getAuthorities();

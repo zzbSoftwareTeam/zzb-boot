@@ -44,29 +44,66 @@
 <script type="text/javascript" th:src="@{/third/stomp/stomp.min.js}"></script>
 <script th:src="@{/third/layer/3.0.3/layer.js}"></script>
 <script th:inline="javascript">
-/*<![CDATA[*/
-var userName=/*[[${session.SPRING_SECURITY_CONTEXT.authentication.name}]]*/ null;
-/*]]>*/
 
+var sessionId="";
 var sock = new SockJS("/websocket");
-var stomp = Stomp.over(sock);
+
+/* sock.onopen = function() {
+    console.log('open');
+};
+sock.onmessage = function(e) {
+    console.log('message', e.data);
+};
+sock.onclose = function() {
+    console.log('close');
+};
+sock.send('test');
+sock.close(); */
+
+//创建stomp客户端
+//var url = "ws://localhost:61614/stomp";
+//var client = Stomp.client(url);
   
+var stomp = Stomp.over(sock);
+
+//stompClient不需要指定login或passcode头.即使加了,客户端也会忽略或者会覆盖掉它  
 stomp.connect({},//用户名密码 
 	function(frame) {//连接成功回调
-	//使用user 才会发送消息到指定的用户
-		stomp.subscribe("/user/queue_im", getMessage);
-		stomp.send("/ws/queue_toService", {}, JSON.stringify({'user':userName,'message': 'running','date':new Date()}));
+		//默认情况下，如果标头中没有提供，则库将生成唯一ID。要使用您自己的ID，请使用以下headers参数传递它
+		//var mysubid="123456789";
+		//定阅消息头
+		//客户端指定它将处理消息确认，并且有兴趣仅接收与选择器匹配的消息location = 'Europe'。
+		//var headers = {ack: 'client', 'selector': "location = 'Europe'",};
+		//客户端可以选择通过订阅目标来处理消息确认，并指定ack设置为client或的标头client-individual。
+		
+		var headers = {ack: 'client'/* , 'id': mysubid */};
+		//使用user 才会发送消息到指定的用户
+		var subscription = stomp.subscribe("/user/queue_im", getMessage,headers);
+		//取消定阅
+		//subscription.unsubscribe();
+		stomp.send("/ws/queue_toService", {}, "{}");
 	},function(error) {//连接失败回调
 		layer.msg("连接失败:"+error);
 	}
 );
 
 function getMessage(msgObj) {
-	console.log(msgObj);
-	var obj = JSON.parse(msgObj.body);
-	var url=/*[[@{/img/im/robot.png}]]*/ null;
-    $('#obj-panel').append('<div class="ans"><img class="ansimg" src="'+url+'"/>'+
-    					'<div class="triangle-border left">'+obj.message+'</div></div>');
+	if (msgObj.body) {
+      	var obj = JSON.parse(msgObj.body);
+      	if(obj.status=="one"){
+			sessionId = obj.msessionId;
+			var url=/*[[@{/img/im/robot.png}]]*/ null;
+		    $('#obj-panel').append('<div class="ans"><img class="ansimg" src="'+url+'"/>'+
+	    					'<div class="triangle-border left">'+obj.message+'</div></div>');
+		}else{
+			var url=/*[[@{/img/im/robot.png}]]*/ null;
+		    $('#obj-panel').append('<div class="ans"><img class="ansimg" src="'+url+'"/>'+
+	    					'<div class="triangle-border left">'+obj.message+'</div></div>');
+		}
+    } else {
+      alert("got empty message");
+    }
+    //stomp.ack();
 }
 
 
@@ -74,7 +111,7 @@ function getMessage(msgObj) {
 function send(){
 	var url = /*[[@{/img/im/head3.jpg}]]*/ null;
    	var text=$("#shuru").val();
-   	stomp.send("/ws/queue_transfer", {}, JSON.stringify({'user':userName,'message': text,'date':new Date()}));
+   	stomp.send("/ws/queue_transfer", {}, JSON.stringify({'msessionId':sessionId,'message': text,'date':new Date()}));
    	$('#obj-panel').append('<div class="ask"><img class="askimg" src="'+url+'">'+
                        	'<p class="triangle-border-blue right">'+text+'</p></div>');
     $("#shuru").val("");

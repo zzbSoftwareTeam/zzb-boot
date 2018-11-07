@@ -13,10 +13,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.zzb.module.system.dao.SysPermissionDao;
+import com.zzb.module.system.dao.SysMenuDao;
 import com.zzb.module.system.dao.SysUserDao;
-import com.zzb.module.system.entity.SysPermission;
+import com.zzb.module.system.entity.SysMenu;
 import com.zzb.module.system.entity.SysUser;
+
 
 @Service
 public class MyUserDetailsService implements UserDetailsService{
@@ -24,18 +25,18 @@ public class MyUserDetailsService implements UserDetailsService{
 	@Autowired
     SysUserDao sysUserDao;
 	@Autowired
-	SysPermissionDao sysPermissionDao;
+	SysMenuDao sysMenuDao;
 	
 	@Override
 	public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
 		try {
 			SysUser user = sysUserDao.findByUserName(name);
 	        if (user != null) {
-	            List<SysPermission> permissions = sysPermissionDao.findByUserId(user.getId());
+	            List<SysMenu> menus = sysMenuDao.findByUserId(user.getId());
 	            Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-	            for (SysPermission permission : permissions) {
-	                if (permission != null && permission.getPerName()!=null) {
-		                GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(permission.getUrl());
+	            for (SysMenu menu : menus) {
+	                if (menu != null && menu.getTitle()!=null) {
+		                GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(menu.getUrl());
 		                //1：此处将权限信息添加到 GrantedAuthority 对象中，在后面进行全权限验证时会使用GrantedAuthority 对象。
 		                grantedAuthorities.add(grantedAuthority);
 	                }

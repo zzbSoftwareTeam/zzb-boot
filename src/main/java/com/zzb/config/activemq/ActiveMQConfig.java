@@ -9,10 +9,17 @@ import org.springframework.context.annotation.Configuration;
 
 import com.zzb.common.service.activemq.ActiveMQService;
 
-@Configuration
+/**
+ * 
+ * ClassName: ActiveMQConfig 
+ * @Description: TODO 配置ActiveMQ容器，直接用java代码对ActiveMQ数据进行操作
+ * @author zengzhibin
+ * @date 2018年9月14日
+ */
+//@Configuration
 public class ActiveMQConfig {
 
-	@Value("${spring.activemq.jmx-url}")
+	/*@Value("${spring.activemq.jmx-url}")
 	private String JMX_URL;
 	
 	@Value("${spring.activemq.brokerName}")
@@ -30,5 +37,5 @@ public class ActiveMQConfig {
 	@Bean
 	public ActiveMQService activeMQService(){
 		return new ActiveMQService(JMX_URL,BROKER_NAME);
-	}
+	}*/
 }

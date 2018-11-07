@@ -1,17 +1,23 @@
 package com.zzb.common.service.redis;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.ListOperations;
+import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.SetOperations;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
+
+import com.zzb.common.utils.SerializeUtil;
+import com.zzb.module.im.entity.ServiceImRedis;
 
 /**
  * 
@@ -34,6 +40,7 @@ public class RedisService {
     public static final String KEY_PREFIX_VALUE = "str:";
     public static final String KEY_PREFIX_SET = "set:";
     public static final String KEY_PREFIX_LIST = "list:";
+    public static final String KEY_PREFIX_MAP = "map:";
 
     /**
      * 缓存value操作
@@ -66,6 +73,50 @@ public class RedisService {
     }
 
     /**
+     * 获取缓存
+     * @param k
+     * @return
+     */
+    public String getValue(String k) {
+        try {
+            ValueOperations<String, String> valueOps =  redisTemplate.opsForValue();
+            return valueOps.get(KEY_PREFIX_VALUE + k);
+        } catch (Throwable t) {
+            logger.error("获取缓存失败key[" + KEY_PREFIX_VALUE + k + ", error[" + t + "]");
+        }
+        return null;
+    }
+    
+    /** 
+     * 如果 key 存在则覆盖,并返回旧值. 
+     * 如果不存在,返回null 并添加 
+     * @param key 
+     * @param value 
+     * @return 
+     */  
+    public String getAndSet(String key,String value){  
+        return (String) redisTemplate.opsForValue().getAndSet(KEY_PREFIX_VALUE+key, value);  
+    }  
+      
+      
+    /** 
+     * 批量添加 key-value (重复的键会覆盖) 
+     * @param keyAndValue 
+     */  
+    public void batchSet(Map<String,String> keyAndValue){  
+        redisTemplate.opsForValue().multiSet(keyAndValue);  
+    }  
+      
+    /** 
+     * 批量添加 key-value 只有在键不存在时,才添加 
+     * map 中只要有一个key存在,则全部不添加 
+     * @param keyAndValue 
+     */  
+    public void batchSetIfAbsent(Map<String,String> keyAndValue){  
+        redisTemplate.opsForValue().multiSetIfAbsent(keyAndValue);  
+    } 
+    
+    /**
      * 判断缓存是否存在
      * @param k
      * @return
@@ -92,6 +143,11 @@ public class RedisService {
         return containsKey(KEY_PREFIX_LIST + k);
     }
 
+    
+    public boolean containsMapKey(String k) {
+        return containsKey(KEY_PREFIX_MAP + k);
+    }
+    
     public boolean containsKey(String key) {
         try {
             return redisTemplate.hasKey(key);
@@ -99,21 +155,6 @@ public class RedisService {
             logger.error("判断缓存存在失败key[" + key + ", error[" + t + "]");
         }
         return false;
-    }
-
-    /**
-     * 获取缓存
-     * @param k
-     * @return
-     */
-    public String getValue(String k) {
-        try {
-            ValueOperations<String, String> valueOps =  redisTemplate.opsForValue();
-            return valueOps.get(KEY_PREFIX_VALUE + k);
-        } catch (Throwable t) {
-            logger.error("获取缓存失败key[" + KEY_PREFIX_VALUE + k + ", error[" + t + "]");
-        }
-        return null;
     }
 
     /**
@@ -133,6 +174,11 @@ public class RedisService {
         return remove(KEY_PREFIX_LIST + k);
     }
 
+    
+    public boolean removeMap(String k) {
+        return remove(KEY_PREFIX_MAP + k);
+    }
+    
     /**
      * 移除缓存
      * @param key
@@ -345,4 +391,65 @@ public class RedisService {
         }
         return false;
     }
+    
+    /**
+     * 增加map缓存
+     * @param k
+     * @return
+     */
+    public boolean cacheMap(String k,Map<String,Object> v) {
+    	String key = KEY_PREFIX_MAP + k;
+        try {
+        	HashOperations<String, String, Object> hashOps =  redisTemplate.opsForHash();
+        	hashOps.putAll(key, v);
+            return true;
+        } catch (Throwable t) {
+            logger.error("缓存[" + key + "]失败, value[" + v + "]", t);
+        }
+        return false;
+    }
+    
+    /**
+     * 获取map缓存
+     * @param k
+     * @return
+     */
+    public Map<String,Object> getMap(String k) {
+        try {
+        	HashOperations<String, String, Object> hashOps =  redisTemplate.opsForHash();
+            return hashOps.entries(KEY_PREFIX_MAP + k);
+        } catch (Throwable t) {
+            logger.error("获取map缓存失败key[" + KEY_PREFIX_MAP + k + ", error[" + t + "]");
+        }
+        return null;
+    }
+    
+    public boolean cacheObject(ServiceImRedis obj) {
+    	try {
+	    	final byte[] value = SerializeUtil.serialize(obj);
+	        redisTemplate.execute((RedisCallback<Void>) connection -> {
+	            connection.set(obj.getKey().getBytes(), value);
+	            return null;
+	        });
+	        return true;
+        } catch (Throwable t) {
+            logger.error("缓存[" + obj.getKey() + "]失败, value[" + obj.toString() + "]", t);
+        }
+        return false;
+    }
+    
+    public void removeObj(String key) {  
+        redisTemplate.execute((RedisCallback<Void>) connection -> {
+            connection.del(key.getBytes());
+            return null;
+        });
+    }  
+  
+    public ServiceImRedis getObj(String key) {  
+    	byte[] result = redisTemplate.execute((RedisCallback<byte[]>) connection -> connection.get(key.getBytes()));
+        if (result == null) {
+            return null;
+        }
+        return (ServiceImRedis) SerializeUtil.unserialize(result);
+    } 
 }

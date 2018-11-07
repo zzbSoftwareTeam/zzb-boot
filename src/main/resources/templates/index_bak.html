@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<head>
+	</head>
+	<body>
+		<form th:action="@{/logout}" method="post">
+            <input type="submit" value="注销"/>
+        </form>
+        <br/>
+        <br/>
+        <a th:href="@{/im/userIm}">即时通讯用户入口</a>
+        <br/>
+        <a th:href="@{/im/serviceIm}">即时通讯客服入口</a>
+        
+        
+        <br/>
+        <br/>
+        <a th:href="@{/im/topic}">即时通讯群聊</a>
+        
+        
+        <br/>
+        <br/>
+        <a th:href="@{/im/webrtc}">WebRTC测试</a>
+        
+	</body>
+</html>

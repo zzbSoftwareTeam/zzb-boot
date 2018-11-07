@@ -14,11 +14,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-@Service
+/**
+ * ClassName: ActiveMQService 
+ * @Description: TODO 配置好了，直接操作activemq容器
+ * @author zengzhibin
+ * @date 2018年9月14日
+ */
+//@Service
 public class ActiveMQService {
 	
 	/** 日志记录 */
-	private Logger logger =  LoggerFactory.getLogger(this.getClass());
+	/*private Logger logger =  LoggerFactory.getLogger(this.getClass());
 	
 	private BrokerViewMBean mBean;
 	
@@ -80,5 +86,5 @@ public class ActiveMQService {
 			}
 		}
 		return 0l;
-	}
+	}*/
 }

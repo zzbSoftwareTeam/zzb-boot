@@ -1,36 +1,42 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<title>登录页面</title>
-		<link rel="stylesheet" th:href="@{/css/reset.css}" />
-		<link rel="stylesheet" th:href="@{/css/login.css}" />
-		<link rel="stylesheet" th:href="@{/css/hover-min.css}" />
-	</head>
-	<body>
-		<div class="loginWin">
-	        <h1>欢迎登录</h1>
-	        <form th:action="@{/login}" th:method="post" th:object="${user}">
-	            <div class="row">
-	                <input type="text" name="userName" placeholder="用户名">
-	            </div>
-	            <div class="row passRow">
-	                <input type="password" name="userPass" placeholder="密码">
-	            </div>
-	            <div class="row btnRow">
-	                <button class="loginBtn hvr-float-shadow" type="submit">登录</button>
-	            </div>
-	        </form>
-	    </div>
-	</body>
-	<script th:src="@{/third/jquery/jquery-3.2.1.min.js}"></script>
-	<script th:src="@{/third/layer/3.0.3/layer.js}"></script>
-	<script th:inline="javascript">
-	/*<![CDATA[*/
-	var ecxeption=/*[[${session.SPRING_SECURITY_LAST_EXCEPTION}]]*/ null;
-	/*]]>*/
-	console.log(ecxeption);
-	if(ecxeption!=null){
-		layer.msg('用户名/密码不正确！', {icon: 5});
-	}
-	</script>
+<head>
+	<title>Login</title>
+	<link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+	<link rel="stylesheet" href="common/css/login.css"/>
+	<style type="text/css">
+		.messagels{
+			top:85%;
+		}
+	</style>
+</head>
+<body>
+<div id="app" class="login-form">
+	<div class="head-info">
+		<label class="lbl-1"> </label> 
+		<label class="lbl-2"> </label> 
+		<label class="lbl-3"> </label>
+	</div>
+	<div class="clear"></div>
+	<div class="avtar">
+		<img src="common/img/avtar.png" />
+	</div>
+	<form>
+		<input type="text" class="text" v-model="userName" placeholder="请输入账号">
+		<!-- <div class="key"> -->
+		<div class="">
+			<input type="password" v-model="userPass" onfocus="this.value = '';"
+				onblur="if (this.value == '') {this.value = '123';}">
+		</div>
+	</form>
+	<div class="signin">
+		<input type="submit" value="Login" v-on:click="login">
+	</div>
+</div>
+
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.js"></script>
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script src="/common/js/login.js"></script>
+</body>
 </html>
