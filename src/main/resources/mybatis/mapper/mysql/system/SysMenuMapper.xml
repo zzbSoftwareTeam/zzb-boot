@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zzb.module.system.dao.SysMenuDao">
+<mapper namespace="com.zzb.module.system.dao.SysMenuMapper">
   <resultMap id="BaseResultMap" type="com.zzb.module.system.entity.SysMenu">
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="parent_id" jdbcType="VARCHAR" property="parentId" />
+    <result column="top_title" jdbcType="VARCHAR" property="topTitle" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="url" jdbcType="VARCHAR" property="url" />
     <result column="status" jdbcType="CHAR" property="status" />
@@ -16,8 +17,8 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, parent_id, title, url, status, icon, menu_type, sort, creator, create_time, update_user, 
-    update_time
+    id, parent_id, top_title, title, url, status, icon, menu_type, sort, creator, create_time, 
+    update_user, update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -30,14 +31,16 @@
     where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.zzb.module.system.entity.SysMenu">
-    insert into sys_menu (id, parent_id, title, 
-      url, status, icon, menu_type, 
-      sort, creator, create_time, 
-      update_user, update_time)
-    values (#{id,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
-      #{url,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{icon,jdbcType=VARCHAR}, #{menuType,jdbcType=CHAR}, 
-      #{sort,jdbcType=INTEGER}, #{creator,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+    insert into sys_menu (id, parent_id, top_title, 
+      title, url, status, icon, 
+      menu_type, sort, creator, 
+      create_time, update_user, update_time
+      )
+    values (#{id,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, #{topTitle,jdbcType=VARCHAR}, 
+      #{title,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{icon,jdbcType=VARCHAR}, 
+      #{menuType,jdbcType=CHAR}, #{sort,jdbcType=INTEGER}, #{creator,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.zzb.module.system.entity.SysMenu">
     insert into sys_menu
@@ -47,6 +50,9 @@
       </if>
       <if test="parentId != null">
         parent_id,
+      </if>
+      <if test="topTitle != null">
+        top_title,
       </if>
       <if test="title != null">
         title,
@@ -86,6 +92,9 @@
       <if test="parentId != null">
         #{parentId,jdbcType=VARCHAR},
       </if>
+      <if test="topTitle != null">
+        #{topTitle,jdbcType=VARCHAR},
+      </if>
       <if test="title != null">
         #{title,jdbcType=VARCHAR},
       </if>
@@ -124,6 +133,9 @@
       <if test="parentId != null">
         parent_id = #{parentId,jdbcType=VARCHAR},
       </if>
+      <if test="topTitle != null">
+        top_title = #{topTitle,jdbcType=VARCHAR},
+      </if>
       <if test="title != null">
         title = #{title,jdbcType=VARCHAR},
       </if>
@@ -160,6 +172,7 @@
   <update id="updateByPrimaryKey" parameterType="com.zzb.module.system.entity.SysMenu">
     update sys_menu
     set parent_id = #{parentId,jdbcType=VARCHAR},
+      top_title = #{topTitle,jdbcType=VARCHAR},
       title = #{title,jdbcType=VARCHAR},
       url = #{url,jdbcType=VARCHAR},
       status = #{status,jdbcType=CHAR},
@@ -173,15 +186,24 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
   
-  <select id="findAll" resultType="com.zzb.module.system.entity.SysMenu">
-        select * from sys_menu
-    </select>
-    
-    <select id="findByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
-        select sp.* from sys_menu sp
-		left join sys_role_menu rp on sp.id=rp.menu_id
-		LEFT JOIN sys_role role on role.id=rp.role_id
-		LEFT JOIN sys_user_role us on us.role_id=role.id
-        where user_id = #{userId,jdbcType=VARCHAR}
-    </select>
+  <select id="findByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
+	SELECT 
+		m.id id ,
+	    m.parent_id parentId ,
+	    m.top_title topTitle ,
+	    m.title title ,
+	    m.url url ,
+	    m.status status ,
+	    m.icon icon ,
+	    m.menu_type menuType ,
+	    m.sort sort ,
+	    m.creator creator ,
+	    m.create_time createTime ,
+	    m.update_user updateUser ,
+	    m.update_time updateTime
+	FROM sys_menu m
+	LEFT JOIN sys_role_menu rm ON m.id=rm.menu_id
+	LEFT JOIN sys_user_role ur ON rm.role_id=ur.role_id
+	WHERE ur.user_id=#{userId,jdbcType=VARCHAR}
+  </select>
 </mapper>

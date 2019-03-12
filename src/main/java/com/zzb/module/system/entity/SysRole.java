@@ -5,6 +5,8 @@ import java.util.Date;
 public class SysRole {
     private String id;
 
+    private String roleCode;
+
     private String roleName;
 
     private Date createTime;
@@ -23,6 +25,14 @@ public class SysRole {
 
     public void setId(String id) {
         this.id = id == null ? null : id.trim();
+    }
+
+    public String getRoleCode() {
+        return roleCode;
+    }
+
+    public void setRoleCode(String roleCode) {
+        this.roleCode = roleCode == null ? null : roleCode.trim();
     }
 
     public String getRoleName() {

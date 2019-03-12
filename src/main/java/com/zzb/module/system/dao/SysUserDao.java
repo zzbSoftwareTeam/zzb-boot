@@ -18,6 +18,6 @@ public interface SysUserDao {
     int updateByPrimaryKeySelective(SysUser record);
 
     int updateByPrimaryKey(SysUser record);
-    
-    SysUser findByUserName(@Param("name") String name);
+
+	SysUser findByUserName(@Param(value = "name") String name);
 }

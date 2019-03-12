@@ -9,6 +9,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,7 +20,16 @@ import org.springframework.security.web.authentication.SavedRequestAwareAuthenti
 import com.zzb.module.system.dao.SysUserDao;
 import com.zzb.module.system.entity.SysUser;
 
+/**
+ * 
+ * ClassName: LoginSuccessHandler 
+ * @Description: TODO 自定义登录成功后的相关操作 目前有BUG，不进入自定义方法
+ * @author zengzhibin
+ * @date 2019年1月31日
+ */
 public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
+	
+	private Logger log =  LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
     SysUserDao sysUserDao;
@@ -26,6 +37,7 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
+		log.info("---------LoginSuccessHandler----------");
 		// 获得授权后可得到用户信息 可使用Service进行数据库操作
 		//Object obj=authentication.getCredentials();
 		//Object obj1=authentication.getDetails();
@@ -37,6 +49,7 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
 		for (GrantedAuthority grantedAuthority : auths) {
 			System.out.println("permission："+grantedAuthority.getAuthority());
 		}
+		//回调回去
 		super.onAuthenticationSuccess(request, response, authentication);
 	}
 

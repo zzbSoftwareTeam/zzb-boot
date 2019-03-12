@@ -29,34 +29,40 @@ public class LoginController {
     	return"/login";
 	}
     
-    //@PreAuthorize("hasAuthority('/baidu')")
     @GetMapping("/login/return")
 	public @ResponseBody String loginReturn(HttpServletRequest request){
     	String status="";
     	AuthenticationException exception = (AuthenticationException) request.getSession()
     			.getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
     	if (exception instanceof BadCredentialsException) {
-    		status = "用户名或密码不正确";
+    		status = "{\"code\":\"1\",\"msg\":\"用户名或密码不正确\"}";
         }else if(exception instanceof UsernameNotFoundException) {
-        	status = "用户找不到";
+        	status = "{\"code\":\"1\",\"msg\":\"用户找不到\"}";
         }else if(exception instanceof AccountExpiredException) {
-        	status = "账户过期";
+        	status = "{\"code\":\"1\",\"msg\":\"账户过期\"}";
         }else if(exception instanceof LockedException) {
-        	status = "账户锁定";
+        	status = "{\"code\":\"1\",\"msg\":\"账户锁定\"}";
         }else if(exception instanceof DisabledException) {
-        	status = "账户不可用";
+        	status = "{\"code\":\"1\",\"msg\":\"账户不可用\"}";
         }else if(exception instanceof CredentialsExpiredException) {
-        	status = "证书过期";
+        	status = "{\"code\":\"1\",\"msg\":\"证书过期\"}";
         }else{
-    		status="success";
+    		status="{\"code\":\"0\"}";
     	}
 		return status;
 		
 	}
     
+   
     @GetMapping(value={"/","/index"})
 	public String index(){
-		return"/index";
+		return"/main/index";
+	}
+    
+    @PreAuthorize("hasPermission('user', '/user')")
+    @GetMapping(value={"/welcome"})
+	public String welcome(){
+		return"/main/welcome";
 	}
     
     @GetMapping(value={"/index1"})

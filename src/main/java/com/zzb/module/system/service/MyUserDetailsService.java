@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -35,7 +36,7 @@ public class MyUserDetailsService implements UserDetailsService{
 	            List<SysMenu> menus = sysMenuDao.findByUserId(user.getId());
 	            Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 	            for (SysMenu menu : menus) {
-	                if (menu != null && menu.getTitle()!=null) {
+	                if (menu != null && StringUtils.isNotBlank(menu.getUrl())) {
 		                GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(menu.getUrl());
 		                //1：此处将权限信息添加到 GrantedAuthority 对象中，在后面进行全权限验证时会使用GrantedAuthority 对象。
 		                grantedAuthorities.add(grantedAuthority);
@@ -43,10 +44,10 @@ public class MyUserDetailsService implements UserDetailsService{
 	            }
 	            return new User(user.getUserName(), user.getUserPass(), grantedAuthorities);
 	        } else {
-	            throw new UsernameNotFoundException("UserName do not exist!");
+	            throw new UsernameNotFoundException("用户名不正确!");
 	        }
 		} catch (Exception e) {
-			throw new UsernameNotFoundException("UserName do not exist!");
+			throw new UsernameNotFoundException("用户名不正确!");
 		}
 	}
 }

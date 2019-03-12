@@ -24,8 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.zzb.common.bean.AjaxResponse;
-import com.zzb.common.bean.AjaxResponse.MessageType;
+import com.zzb.common.bean.Result;
 
 @Controller
 @RequestMapping("/model")
@@ -103,19 +102,15 @@ public class ModelController {
      * @return
      */
     @DeleteMapping("{id}")
-    public AjaxResponse deleteModel(@PathVariable("id")String id){
-    	AjaxResponse ar = new AjaxResponse();
+    public Result deleteModel(@PathVariable("id")String id){
     	try {
     		RepositoryService repositoryService = processEngine.getRepositoryService();
     		repositoryService.deleteModel(id);
-    		ar.setMessageType(MessageType.SUCCESS);
-    		ar.setMessage("OK");
+    		return Result.success();
     	} catch (Exception e) {
 			e.printStackTrace();
-			ar.setMessageType(MessageType.ERROR);
-    		ar.setMessage("NO");
 		}
-        return ar;
+        return Result.error();
     }
 
     /**
@@ -125,8 +120,7 @@ public class ModelController {
      * @throws Exception
      */
     @PostMapping("{id}/deployment")
-    public AjaxResponse deploy(@PathVariable("id")String id) throws Exception {
-    	AjaxResponse ar = new AjaxResponse();
+    public Result deploy(@PathVariable("id")String id) throws Exception {
     	try {
     		//获取模型
 	        RepositoryService repositoryService = processEngine.getRepositoryService();
@@ -134,15 +128,13 @@ public class ModelController {
 	        byte[] bytes = repositoryService.getModelEditorSource(modelData.getId());
 	
 	        if (bytes == null) {
-	        	ar.setMessageType(MessageType.ERROR);
-	    		ar.setMessage("模型数据为空，请先设计流程并成功保存，再进行发布。");
+	        	return Result.error("模型数据为空，请先设计流程并成功保存，再进行发布。");
 	        }
 	
 	        JsonNode modelNode = new ObjectMapper().readTree(bytes);
 	        BpmnModel model = new BpmnJsonConverter().convertToBpmnModel(modelNode);
 	        if(model.getProcesses().size()==0){
-	        	ar.setMessageType(MessageType.ERROR);
-	    		ar.setMessage("数据模型不符要求，请至少设计一条主线流程。");
+	        	return Result.error("数据模型不符要求，请至少设计一条主线流程。");
 	        }
 	        byte[] bpmnBytes = new BpmnXMLConverter().convertToXML(model);
 	
@@ -154,11 +146,10 @@ public class ModelController {
 	                .deploy();
 	        modelData.setDeploymentId(deployment.getId());
 	        repositoryService.saveModel(modelData);
+	        return Result.success();
     	} catch (Exception e) {
 			e.printStackTrace();
-			ar.setMessageType(MessageType.ERROR);
-    		ar.setMessage("NO");
 		}
-        return ar;
+        return Result.error();
     }
 }

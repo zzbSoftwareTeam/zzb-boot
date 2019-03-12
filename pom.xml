@@ -21,6 +21,7 @@
 		<thymeleaf.version>3.0.2.RELEASE</thymeleaf.version>
     	<thymeleaf-layout-dialect.version>2.0.4</thymeleaf-layout-dialect.version>
 	</properties>
+	
     <repositories>
 		<repository>
 			<id>public</id>
@@ -49,7 +50,7 @@
 	</pluginRepositories>
 
 	<dependencies>
-	<dependency>
+		<dependency>
 	        <groupId>org.springframework.boot</groupId>
 	        <artifactId>spring-boot-starter</artifactId>
 	    </dependency>
@@ -105,7 +106,12 @@
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-devtools</artifactId>
 		</dependency>
-		
+		<!-- 这里指定打包的时候不再需要tomcat相关的包 更改打war包加入的配置-->
+		<dependency>
+		   <groupId>org.springframework.boot</groupId>
+		   <artifactId>spring-boot-starter-tomcat</artifactId>
+		   <scope>provided</scope>
+		</dependency>
 	    <!-- Apache Commons start-->
 		<dependency>
 		    <groupId>org.apache.commons</groupId>
@@ -432,6 +438,7 @@
 					</execution>
 				</executions>
 			</plugin>
+			<!-- mybatis 自动生成类   mybatis-generator:generate -->
 			<plugin>
 				<groupId>org.mybatis.generator</groupId>
 				<artifactId>mybatis-generator-maven-plugin</artifactId>

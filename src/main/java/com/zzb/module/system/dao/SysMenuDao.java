@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.zzb.module.system.entity.SysMenu;
-
 @Mapper
 public interface SysMenuDao {
     int deleteByPrimaryKey(String id);
@@ -20,8 +19,6 @@ public interface SysMenuDao {
     int updateByPrimaryKeySelective(SysMenu record);
 
     int updateByPrimaryKey(SysMenu record);
-    
-	List<SysMenu> findAll();
-	
-	List<SysMenu> findByUserId(@Param("userId") String userId);
+
+	List<SysMenu> findByUserId(@Param(value = "userId") String userId);
 }

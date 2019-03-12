@@ -3,7 +3,6 @@ package com.zzb.module.system.dao;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.zzb.module.system.entity.SysRole;
-
 @Mapper
 public interface SysRoleDao {
     int deleteByPrimaryKey(String id);

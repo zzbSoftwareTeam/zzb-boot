@@ -7,6 +7,8 @@ public class SysMenu {
 
     private String parentId;
 
+    private String topTitle;
+
     private String title;
 
     private String url;
@@ -41,6 +43,14 @@ public class SysMenu {
 
     public void setParentId(String parentId) {
         this.parentId = parentId == null ? null : parentId.trim();
+    }
+
+    public String getTopTitle() {
+        return topTitle;
+    }
+
+    public void setTopTitle(String topTitle) {
+        this.topTitle = topTitle == null ? null : topTitle.trim();
     }
 
     public String getTitle() {
