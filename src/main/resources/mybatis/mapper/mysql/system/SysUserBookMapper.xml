@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzb.module.system.dao.SysUserBookDao">
+  <resultMap id="BaseResultMap" type="com.zzb.module.system.entity.SysUserBook">
+    <id column="user_book_id" jdbcType="VARCHAR" property="userBookId" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="lessee_id" jdbcType="VARCHAR" property="lesseeId" />
+    <result column="entry_date" jdbcType="DATE" property="entryDate" />
+    <result column="work_date" jdbcType="DATE" property="workDate" />
+    <result column="bw_date" jdbcType="DATE" property="bwDate" />
+    <result column="user_type" jdbcType="VARCHAR" property="userType" />
+    <result column="work_type" jdbcType="VARCHAR" property="workType" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    user_book_id, user_id, lessee_id, entry_date, work_date, bw_date, user_type, work_type
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user_book
+    where user_book_id = #{userBookId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_user_book
+    where user_book_id = #{userBookId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zzb.module.system.entity.SysUserBook">
+    insert into sys_user_book (user_book_id, user_id, lessee_id, 
+      entry_date, work_date, bw_date, 
+      user_type, work_type)
+    values (#{userBookId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{lesseeId,jdbcType=VARCHAR}, 
+      #{entryDate,jdbcType=DATE}, #{workDate,jdbcType=DATE}, #{bwDate,jdbcType=DATE}, 
+      #{userType,jdbcType=VARCHAR}, #{workType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zzb.module.system.entity.SysUserBook">
+    insert into sys_user_book
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userBookId != null">
+        user_book_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="lesseeId != null">
+        lessee_id,
+      </if>
+      <if test="entryDate != null">
+        entry_date,
+      </if>
+      <if test="workDate != null">
+        work_date,
+      </if>
+      <if test="bwDate != null">
+        bw_date,
+      </if>
+      <if test="userType != null">
+        user_type,
+      </if>
+      <if test="workType != null">
+        work_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userBookId != null">
+        #{userBookId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="lesseeId != null">
+        #{lesseeId,jdbcType=VARCHAR},
+      </if>
+      <if test="entryDate != null">
+        #{entryDate,jdbcType=DATE},
+      </if>
+      <if test="workDate != null">
+        #{workDate,jdbcType=DATE},
+      </if>
+      <if test="bwDate != null">
+        #{bwDate,jdbcType=DATE},
+      </if>
+      <if test="userType != null">
+        #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="workType != null">
+        #{workType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zzb.module.system.entity.SysUserBook">
+    update sys_user_book
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="lesseeId != null">
+        lessee_id = #{lesseeId,jdbcType=VARCHAR},
+      </if>
+      <if test="entryDate != null">
+        entry_date = #{entryDate,jdbcType=DATE},
+      </if>
+      <if test="workDate != null">
+        work_date = #{workDate,jdbcType=DATE},
+      </if>
+      <if test="bwDate != null">
+        bw_date = #{bwDate,jdbcType=DATE},
+      </if>
+      <if test="userType != null">
+        user_type = #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="workType != null">
+        work_type = #{workType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where user_book_id = #{userBookId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zzb.module.system.entity.SysUserBook">
+    update sys_user_book
+    set user_id = #{userId,jdbcType=VARCHAR},
+      lessee_id = #{lesseeId,jdbcType=VARCHAR},
+      entry_date = #{entryDate,jdbcType=DATE},
+      work_date = #{workDate,jdbcType=DATE},
+      bw_date = #{bwDate,jdbcType=DATE},
+      user_type = #{userType,jdbcType=VARCHAR},
+      work_type = #{workType,jdbcType=VARCHAR}
+    where user_book_id = #{userBookId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,42 +1,118 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zzb.module.system.dao.SysRoleMapper">
+<mapper namespace="com.zzb.module.system.dao.SysRoleDao">
   <resultMap id="BaseResultMap" type="com.zzb.module.system.entity.SysRole">
-    <id column="id" jdbcType="VARCHAR" property="id" />
+    <id column="role_id" jdbcType="VARCHAR" property="roleId" />
+    <result column="lessee_id" jdbcType="VARCHAR" property="lesseeId" />
     <result column="role_code" jdbcType="VARCHAR" property="roleCode" />
     <result column="role_name" jdbcType="VARCHAR" property="roleName" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="creator" jdbcType="VARCHAR" property="creator" />
     <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+    <result column="create_time" jdbcType="DATE" property="createTime" />
     <result column="update_user" jdbcType="VARCHAR" property="updateUser" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="update_time" jdbcType="DATE" property="updateTime" />
   </resultMap>
+  
+   <resultMap type="com.zzb.module.system.entity.SysRole" id="roleUsers">
+        <id column="role_id" jdbcType="VARCHAR" property="roleId" />
+	    <result column="lessee_id" jdbcType="VARCHAR" property="lesseeId" />
+	    <result column="role_code" jdbcType="VARCHAR" property="roleCode" />
+	    <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+	    <result column="description" jdbcType="VARCHAR" property="description" />
+	    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+	    <result column="create_time" jdbcType="DATE" property="createTime" />
+	    <result column="update_user" jdbcType="VARCHAR" property="updateUser" />
+	    <result column="update_time" jdbcType="DATE" property="updateTime" />
+        <collection property="users" ofType="com.zzb.module.system.entity.SysUser">
+            <id column="user_id" jdbcType="VARCHAR" property="userId" />
+		    <result column="lessee_id" jdbcType="VARCHAR" property="lesseeId" />
+		    <result column="user_account" jdbcType="VARCHAR" property="userAccount" />
+		    <result column="user_pass" jdbcType="VARCHAR" property="userPass" />
+		    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+		    <result column="user_pinyin" jdbcType="VARCHAR" property="userPinyin" />
+		    <result column="user_book_id" jdbcType="VARCHAR" property="userBookId" />
+		    <result column="user_tel" jdbcType="VARCHAR" property="userTel" />
+		    <result column="se_tel" jdbcType="VARCHAR" property="seTel" />
+		    <result column="telephone" jdbcType="VARCHAR" property="telephone" />
+		    <result column="email" jdbcType="VARCHAR" property="email" />
+		    <result column="sex" jdbcType="INTEGER" property="sex" />
+		    <result column="birthday" jdbcType="DATE" property="birthday" />
+		    <result column="city" jdbcType="VARCHAR" property="city" />
+		    <result column="avatar_url" jdbcType="VARCHAR" property="avatarUrl" />
+		    <result column="org_id" jdbcType="VARCHAR" property="orgId" />
+		    <result column="post_id" jdbcType="VARCHAR" property="postId" />
+		    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+		    <result column="create_time" jdbcType="DATE" property="createTime" />
+		    <result column="last_time" jdbcType="DATE" property="lastTime" />
+		    <result column="passup_time" jdbcType="DATE" property="passupTime" />
+		    <result column="status" jdbcType="VARCHAR" property="status" />
+		    <result column="del_flag" jdbcType="VARCHAR" property="delFlag" />
+		    <result column="sort" jdbcType="INTEGER" property="sort" />
+        </collection>
+    </resultMap>
+    
   <sql id="Base_Column_List">
-    id, role_code, role_name, create_time, creator, description, update_user, update_time
+    role_id, lessee_id, role_code, role_name, description, create_user, create_time, 
+    update_user, update_time
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from sys_role
-    where id = #{id,jdbcType=VARCHAR}
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="roleUsers">
+    select r.*,u.* from sys_role r 
+	left join sys_user_role ur on r.role_id=ur.role_id
+	LEFT JOIN sys_user u on ur.user_id=u.user_id 
+    where r.role_id = #{r.id,jdbcType=VARCHAR}
   </select>
+  
+  <select id="selectPage" parameterType="com.zzb.module.system.entity.SysRole" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from sys_role
+    where lessee_id = #{lesseeId,jdbcType=VARCHAR}
+      <if test="roleCode != null">
+        AND role_code = #{roleCode,jdbcType=VARCHAR}
+      </if>
+      <if test="roleName != null">
+        AND role_name = #{roleName,jdbcType=VARCHAR}
+      </if>
+      <if test="description != null">
+        AND description = #{description,jdbcType=VARCHAR}
+      </if>
+  </select>
+  
+  <select id="selectAll" parameterType="com.zzb.module.system.entity.SysRole" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from sys_role
+    where lessee_id = #{lesseeId,jdbcType=VARCHAR}
+      <if test="roleCode != null">
+        AND role_code = #{roleCode,jdbcType=VARCHAR}
+      </if>
+      <if test="roleName != null">
+        AND role_name = #{roleName,jdbcType=VARCHAR}
+      </if>
+      <if test="description != null">
+        AND description = #{description,jdbcType=VARCHAR}
+      </if>
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from sys_role
-    where id = #{id,jdbcType=VARCHAR}
+    where role_id = #{roleId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.zzb.module.system.entity.SysRole">
-    insert into sys_role (id, role_code, role_name, 
-      create_time, creator, description, 
-      update_user, update_time)
-    values (#{id,jdbcType=VARCHAR}, #{roleCode,jdbcType=VARCHAR}, #{roleName,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{creator,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
-      #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+    insert into sys_role (role_id, lessee_id, role_code, 
+      role_name, description, create_user, 
+      create_time, update_user, update_time
+      )
+    values (#{roleId,jdbcType=VARCHAR}, #{lesseeId,jdbcType=VARCHAR}, #{roleCode,jdbcType=VARCHAR}, 
+      #{roleName,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=DATE}, #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=DATE}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.zzb.module.system.entity.SysRole">
     insert into sys_role
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
+      <if test="roleId != null">
+        role_id,
+      </if>
+      <if test="lesseeId != null">
+        lessee_id,
       </if>
       <if test="roleCode != null">
         role_code,
@@ -44,14 +120,14 @@
       <if test="roleName != null">
         role_name,
       </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="creator != null">
-        creator,
-      </if>
       <if test="description != null">
         description,
+      </if>
+      <if test="createUser != null">
+        create_user,
+      </if>
+      <if test="createTime != null">
+        create_time,
       </if>
       <if test="updateUser != null">
         update_user,
@@ -61,8 +137,11 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=VARCHAR},
+      <if test="roleId != null">
+        #{roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="lesseeId != null">
+        #{lesseeId,jdbcType=VARCHAR},
       </if>
       <if test="roleCode != null">
         #{roleCode,jdbcType=VARCHAR},
@@ -70,59 +149,63 @@
       <if test="roleName != null">
         #{roleName,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="creator != null">
-        #{creator,jdbcType=VARCHAR},
-      </if>
       <if test="description != null">
         #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=DATE},
       </if>
       <if test="updateUser != null">
         #{updateUser,jdbcType=VARCHAR},
       </if>
       <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
+        #{updateTime,jdbcType=DATE},
       </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.zzb.module.system.entity.SysRole">
     update sys_role
     <set>
+      <if test="lesseeId != null">
+        lessee_id = #{lesseeId,jdbcType=VARCHAR},
+      </if>
       <if test="roleCode != null">
         role_code = #{roleCode,jdbcType=VARCHAR},
       </if>
       <if test="roleName != null">
         role_name = #{roleName,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="creator != null">
-        creator = #{creator,jdbcType=VARCHAR},
-      </if>
       <if test="description != null">
         description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null">
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=DATE},
       </if>
       <if test="updateUser != null">
         update_user = #{updateUser,jdbcType=VARCHAR},
       </if>
       <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
+        update_time = #{updateTime,jdbcType=DATE},
       </if>
     </set>
-    where id = #{id,jdbcType=VARCHAR}
+    where role_id = #{roleId,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zzb.module.system.entity.SysRole">
     update sys_role
-    set role_code = #{roleCode,jdbcType=VARCHAR},
+    set lessee_id = #{lesseeId,jdbcType=VARCHAR},
+      role_code = #{roleCode,jdbcType=VARCHAR},
       role_name = #{roleName,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      creator = #{creator,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=DATE},
       update_user = #{updateUser,jdbcType=VARCHAR},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=VARCHAR}
+      update_time = #{updateTime,jdbcType=DATE}
+    where role_id = #{roleId,jdbcType=VARCHAR}
   </update>
 </mapper>

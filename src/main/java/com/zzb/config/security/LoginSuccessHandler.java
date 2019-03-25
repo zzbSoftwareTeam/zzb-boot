@@ -42,7 +42,7 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
 		//Object obj=authentication.getCredentials();
 		//Object obj1=authentication.getDetails();
 		User userDetails=(User) authentication.getPrincipal();
-		SysUser user = sysUserDao.findByUserName(userDetails.getUsername());
+		SysUser user = sysUserDao.selectByAccount(userDetails.getUsername());
 		Collection<? extends GrantedAuthority> auths=authentication.getAuthorities();
 		// 输出登录提示信息
 		System.out.println("username:"+user.getUserName()+"IP :" + getIpAddress(request));

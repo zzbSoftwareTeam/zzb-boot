@@ -1,55 +1,125 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zzb.module.system.dao.SysMenuMapper">
+<mapper namespace="com.zzb.module.system.dao.SysMenuDao">
   <resultMap id="BaseResultMap" type="com.zzb.module.system.entity.SysMenu">
-    <id column="id" jdbcType="VARCHAR" property="id" />
+    <id column="menu_id" jdbcType="VARCHAR" property="menuId" />
     <result column="parent_id" jdbcType="VARCHAR" property="parentId" />
+    <result column="menu_type" jdbcType="VARCHAR" property="menuType" />
     <result column="top_title" jdbcType="VARCHAR" property="topTitle" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="url" jdbcType="VARCHAR" property="url" />
-    <result column="status" jdbcType="CHAR" property="status" />
     <result column="icon" jdbcType="VARCHAR" property="icon" />
-    <result column="menu_type" jdbcType="CHAR" property="menuType" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
     <result column="sort" jdbcType="INTEGER" property="sort" />
-    <result column="creator" jdbcType="VARCHAR" property="creator" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+    <result column="create_time" jdbcType="DATE" property="createTime" />
     <result column="update_user" jdbcType="VARCHAR" property="updateUser" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="update_time" jdbcType="DATE" property="updateTime" />
+    <result column="lessee_id" jdbcType="VARCHAR" property="lesseeId" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, parent_id, top_title, title, url, status, icon, menu_type, sort, creator, create_time, 
-    update_user, update_time
+    menu_id, parent_id, menu_type, top_title, title, url, icon, status, sort, create_user, 
+    create_time, update_user, update_time, lessee_id
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from sys_menu
-    where id = #{id,jdbcType=VARCHAR}
+    where menu_id = #{menuId,jdbcType=VARCHAR}
   </select>
+  
+  <select id="selectPage" parameterType="com.zzb.module.system.entity.SysMenu" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_menu
+    <where>
+    	<if test="parentId != null">
+        parent_id = #{parentId,jdbcType=VARCHAR}
+      </if>
+      <if test="menuType != null">
+        menu_type = #{menuType,jdbcType=VARCHAR}
+      </if>
+      <if test="topTitle != null">
+        top_title = #{topTitle,jdbcType=VARCHAR}
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR}
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR}
+      </if>
+      <if test="lesseeId != null">
+        lessee_id = #{lesseeId,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+  
+  <select id="selectMyMenu" parameterType="com.zzb.module.system.entity.SysMenu" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_menu
+    <where>
+    	<if test="parentId != null">
+        parent_id = #{parentId,jdbcType=VARCHAR}
+      </if>
+      <if test="menuType != null">
+        menu_type = #{menuType,jdbcType=VARCHAR}
+      </if>
+      <if test="topTitle != null">
+        top_title = #{topTitle,jdbcType=VARCHAR}
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR}
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR}
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR}
+      </if>
+      <if test="lesseeId != null">
+        lessee_id = #{lesseeId,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+  
+  <select id="selectByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select sm.* from sys_menu sm
+	LEFT JOIN sys_role_menu rm on sm.menu_id=rm.menu_id
+	LEFT JOIN sys_user_role ur on rm.role_id= ur.role_id
+    where ur.user_id = #{userId,jdbcType=VARCHAR}
+  </select>
+  
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from sys_menu
-    where id = #{id,jdbcType=VARCHAR}
+    where menu_id = #{menuId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.zzb.module.system.entity.SysMenu">
-    insert into sys_menu (id, parent_id, top_title, 
-      title, url, status, icon, 
-      menu_type, sort, creator, 
-      create_time, update_user, update_time
-      )
-    values (#{id,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, #{topTitle,jdbcType=VARCHAR}, 
-      #{title,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{icon,jdbcType=VARCHAR}, 
-      #{menuType,jdbcType=CHAR}, #{sort,jdbcType=INTEGER}, #{creator,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}
-      )
+    insert into sys_menu (menu_id, parent_id, menu_type, 
+      top_title, title, url, 
+      icon, status, sort, 
+      create_user, create_time, update_user, 
+      update_time, lessee_id)
+    values (#{menuId,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, #{menuType,jdbcType=VARCHAR}, 
+      #{topTitle,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{icon,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, 
+      #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE}, #{updateUser,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=DATE}, #{lesseeId,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zzb.module.system.entity.SysMenu">
     insert into sys_menu
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
+      <if test="menuId != null">
+        menu_id,
       </if>
       <if test="parentId != null">
         parent_id,
+      </if>
+      <if test="menuType != null">
+        menu_type,
       </if>
       <if test="topTitle != null">
         top_title,
@@ -60,20 +130,17 @@
       <if test="url != null">
         url,
       </if>
-      <if test="status != null">
-        status,
-      </if>
       <if test="icon != null">
         icon,
       </if>
-      <if test="menuType != null">
-        menu_type,
+      <if test="status != null">
+        status,
       </if>
       <if test="sort != null">
         sort,
       </if>
-      <if test="creator != null">
-        creator,
+      <if test="createUser != null">
+        create_user,
       </if>
       <if test="createTime != null">
         create_time,
@@ -84,13 +151,19 @@
       <if test="updateTime != null">
         update_time,
       </if>
+      <if test="lesseeId != null">
+        lessee_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=VARCHAR},
+      <if test="menuId != null">
+        #{menuId,jdbcType=VARCHAR},
       </if>
       <if test="parentId != null">
         #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="menuType != null">
+        #{menuType,jdbcType=VARCHAR},
       </if>
       <if test="topTitle != null">
         #{topTitle,jdbcType=VARCHAR},
@@ -101,29 +174,29 @@
       <if test="url != null">
         #{url,jdbcType=VARCHAR},
       </if>
-      <if test="status != null">
-        #{status,jdbcType=CHAR},
-      </if>
       <if test="icon != null">
         #{icon,jdbcType=VARCHAR},
       </if>
-      <if test="menuType != null">
-        #{menuType,jdbcType=CHAR},
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
       </if>
       <if test="sort != null">
         #{sort,jdbcType=INTEGER},
       </if>
-      <if test="creator != null">
-        #{creator,jdbcType=VARCHAR},
+      <if test="createUser != null">
+        #{createUser,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
+        #{createTime,jdbcType=DATE},
       </if>
       <if test="updateUser != null">
         #{updateUser,jdbcType=VARCHAR},
       </if>
       <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
+        #{updateTime,jdbcType=DATE},
+      </if>
+      <if test="lesseeId != null">
+        #{lesseeId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -132,6 +205,9 @@
     <set>
       <if test="parentId != null">
         parent_id = #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="menuType != null">
+        menu_type = #{menuType,jdbcType=VARCHAR},
       </if>
       <if test="topTitle != null">
         top_title = #{topTitle,jdbcType=VARCHAR},
@@ -142,68 +218,48 @@
       <if test="url != null">
         url = #{url,jdbcType=VARCHAR},
       </if>
-      <if test="status != null">
-        status = #{status,jdbcType=CHAR},
-      </if>
       <if test="icon != null">
         icon = #{icon,jdbcType=VARCHAR},
       </if>
-      <if test="menuType != null">
-        menu_type = #{menuType,jdbcType=CHAR},
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
       </if>
       <if test="sort != null">
         sort = #{sort,jdbcType=INTEGER},
       </if>
-      <if test="creator != null">
-        creator = #{creator,jdbcType=VARCHAR},
+      <if test="createUser != null">
+        create_user = #{createUser,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
+        create_time = #{createTime,jdbcType=DATE},
       </if>
       <if test="updateUser != null">
         update_user = #{updateUser,jdbcType=VARCHAR},
       </if>
       <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
+        update_time = #{updateTime,jdbcType=DATE},
+      </if>
+      <if test="lesseeId != null">
+        lessee_id = #{lesseeId,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=VARCHAR}
+    where menu_id = #{menuId,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zzb.module.system.entity.SysMenu">
     update sys_menu
     set parent_id = #{parentId,jdbcType=VARCHAR},
+      menu_type = #{menuType,jdbcType=VARCHAR},
       top_title = #{topTitle,jdbcType=VARCHAR},
       title = #{title,jdbcType=VARCHAR},
       url = #{url,jdbcType=VARCHAR},
-      status = #{status,jdbcType=CHAR},
       icon = #{icon,jdbcType=VARCHAR},
-      menu_type = #{menuType,jdbcType=CHAR},
+      status = #{status,jdbcType=VARCHAR},
       sort = #{sort,jdbcType=INTEGER},
-      creator = #{creator,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=DATE},
       update_user = #{updateUser,jdbcType=VARCHAR},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=VARCHAR}
+      update_time = #{updateTime,jdbcType=DATE},
+      lessee_id = #{lesseeId,jdbcType=VARCHAR}
+    where menu_id = #{menuId,jdbcType=VARCHAR}
   </update>
-  
-  <select id="findByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
-	SELECT 
-		m.id id ,
-	    m.parent_id parentId ,
-	    m.top_title topTitle ,
-	    m.title title ,
-	    m.url url ,
-	    m.status status ,
-	    m.icon icon ,
-	    m.menu_type menuType ,
-	    m.sort sort ,
-	    m.creator creator ,
-	    m.create_time createTime ,
-	    m.update_user updateUser ,
-	    m.update_time updateTime
-	FROM sys_menu m
-	LEFT JOIN sys_role_menu rm ON m.id=rm.menu_id
-	LEFT JOIN sys_user_role ur ON rm.role_id=ur.role_id
-	WHERE ur.user_id=#{userId,jdbcType=VARCHAR}
-  </select>
 </mapper>

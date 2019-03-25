@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzb.module.system.dao.SysUserRoleDao">
+  <resultMap id="BaseResultMap" type="com.zzb.module.system.entity.SysUserRole">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="role_id" jdbcType="VARCHAR" property="roleId" />
+    <result column="lessee_id" jdbcType="VARCHAR" property="lesseeId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, role_id, lessee_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user_role
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_user_role
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <delete id="deleteByRoleId" parameterType="java.lang.String">
+    delete from sys_user_role
+    where role_id = #{roleId,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.zzb.module.system.entity.SysUserRole">
+    insert into sys_user_role (id, user_id, role_id, 
+      lessee_id)
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{roleId,jdbcType=VARCHAR}, 
+      #{lesseeId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zzb.module.system.entity.SysUserRole">
+    insert into sys_user_role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="roleId != null">
+        role_id,
+      </if>
+      <if test="lesseeId != null">
+        lessee_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null">
+        #{roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="lesseeId != null">
+        #{lesseeId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zzb.module.system.entity.SysUserRole">
+    update sys_user_role
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null">
+        role_id = #{roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="lesseeId != null">
+        lessee_id = #{lesseeId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zzb.module.system.entity.SysUserRole">
+    update sys_user_role
+    set user_id = #{userId,jdbcType=VARCHAR},
+      role_id = #{roleId,jdbcType=VARCHAR},
+      lessee_id = #{lesseeId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

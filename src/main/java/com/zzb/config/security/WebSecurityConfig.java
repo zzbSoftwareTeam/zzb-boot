@@ -63,7 +63,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		//在这里配置哪些页面不需要认证一种方式
 		http.authorizeRequests()
-			.antMatchers("/login","/Hui/**","/third/**","/websocket/**","/im/**","/favicon.ico"
+			.antMatchers("/model/**","/login","/Hui/**","/third/**","/websocket/**","/im/**","/favicon.ico"
 					,"/api/**","/swagger-ui.html","/webjars/**","/swagger-resources/**","/v2/api-docs")
 			//必须已经登录了应用
 			//.authenticated()

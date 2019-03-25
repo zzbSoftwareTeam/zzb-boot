@@ -31,9 +31,9 @@ public class MyUserDetailsService implements UserDetailsService{
 	@Override
 	public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
 		try {
-			SysUser user = sysUserDao.findByUserName(name);
+			SysUser user = sysUserDao.selectByAccount(name);
 	        if (user != null) {
-	            List<SysMenu> menus = sysMenuDao.findByUserId(user.getId());
+	            List<SysMenu> menus = sysMenuDao.selectByUserId(user.getUserId());
 	            Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 	            for (SysMenu menu : menus) {
 	                if (menu != null && StringUtils.isNotBlank(menu.getUrl())) {

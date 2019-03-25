@@ -2,39 +2,47 @@ package com.zzb.module.system.entity;
 
 import java.util.Date;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel(value="资源菜单实体",description="资源菜单实体")
 public class SysMenu {
-    private String id;
-
+	
+	@ApiModelProperty(hidden=true)
+    private String menuId;
+	@ApiModelProperty(value="父资源id",required=false)
     private String parentId;
-
-    private String topTitle;
-
-    private String title;
-
-    private String url;
-
-    private String status;
-
-    private String icon;
-
+    @ApiModelProperty(value="资源菜单类型0菜单1按钮",required=false)
     private String menuType;
-
+    @ApiModelProperty(value="展示名称",required=false)
+    private String topTitle;
+    @ApiModelProperty(value="实际名称",required=false)
+    private String title;
+    @ApiModelProperty(value="资源地址，用于权限验证",required=false)
+    private String url;
+    @ApiModelProperty(value="图标",required=false)
+    private String icon;
+    @ApiModelProperty(value="状态0可用，1不可用",required=false)
+    private String status;
+    @ApiModelProperty(hidden=true)
     private Integer sort;
-
-    private String creator;
-
+    @ApiModelProperty(hidden=true)
+    private String createUser;
+    @ApiModelProperty(hidden=true)
     private Date createTime;
-
+    @ApiModelProperty(hidden=true)
     private String updateUser;
-
+    @ApiModelProperty(hidden=true)
     private Date updateTime;
+    @ApiModelProperty(hidden=true)
+    private String lesseeId;
 
-    public String getId() {
-        return id;
+    public String getMenuId() {
+        return menuId;
     }
 
-    public void setId(String id) {
-        this.id = id == null ? null : id.trim();
+    public void setMenuId(String menuId) {
+        this.menuId = menuId == null ? null : menuId.trim();
     }
 
     public String getParentId() {
@@ -43,6 +51,14 @@ public class SysMenu {
 
     public void setParentId(String parentId) {
         this.parentId = parentId == null ? null : parentId.trim();
+    }
+
+    public String getMenuType() {
+        return menuType;
+    }
+
+    public void setMenuType(String menuType) {
+        this.menuType = menuType == null ? null : menuType.trim();
     }
 
     public String getTopTitle() {
@@ -69,14 +85,6 @@ public class SysMenu {
         this.url = url == null ? null : url.trim();
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status == null ? null : status.trim();
-    }
-
     public String getIcon() {
         return icon;
     }
@@ -85,12 +93,12 @@ public class SysMenu {
         this.icon = icon == null ? null : icon.trim();
     }
 
-    public String getMenuType() {
-        return menuType;
+    public String getStatus() {
+        return status;
     }
 
-    public void setMenuType(String menuType) {
-        this.menuType = menuType == null ? null : menuType.trim();
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.trim();
     }
 
     public Integer getSort() {
@@ -101,12 +109,12 @@ public class SysMenu {
         this.sort = sort;
     }
 
-    public String getCreator() {
-        return creator;
+    public String getCreateUser() {
+        return createUser;
     }
 
-    public void setCreator(String creator) {
-        this.creator = creator == null ? null : creator.trim();
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser == null ? null : createUser.trim();
     }
 
     public Date getCreateTime() {
@@ -131,5 +139,13 @@ public class SysMenu {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getLesseeId() {
+        return lesseeId;
+    }
+
+    public void setLesseeId(String lesseeId) {
+        this.lesseeId = lesseeId == null ? null : lesseeId.trim();
     }
 }

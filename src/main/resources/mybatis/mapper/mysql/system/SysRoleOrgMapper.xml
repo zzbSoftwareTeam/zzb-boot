@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzb.module.system.dao.SysRoleOrgDao">
+  <resultMap id="BaseResultMap" type="com.zzb.module.system.entity.SysRoleOrg">
+    <id column="role_org_id" jdbcType="VARCHAR" property="roleOrgId" />
+    <result column="role_id" jdbcType="VARCHAR" property="roleId" />
+    <result column="org_id" jdbcType="VARCHAR" property="orgId" />
+    <result column="lessee_id" jdbcType="VARCHAR" property="lesseeId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    role_org_id, role_id, org_id, lessee_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_role_org
+    where role_org_id = #{roleOrgId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_role_org
+    where role_org_id = #{roleOrgId,jdbcType=VARCHAR}
+  </delete>
+  
+  <delete id="deleteByRoleId" parameterType="java.lang.String">
+    delete from sys_role_org
+    where role_id = #{roleId,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.zzb.module.system.entity.SysRoleOrg">
+    insert into sys_role_org (role_org_id, role_id, org_id, 
+      lessee_id)
+    values (#{roleOrgId,jdbcType=VARCHAR}, #{roleId,jdbcType=VARCHAR}, #{orgId,jdbcType=VARCHAR}, 
+      #{lesseeId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zzb.module.system.entity.SysRoleOrg">
+    insert into sys_role_org
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="roleOrgId != null">
+        role_org_id,
+      </if>
+      <if test="roleId != null">
+        role_id,
+      </if>
+      <if test="orgId != null">
+        org_id,
+      </if>
+      <if test="lesseeId != null">
+        lessee_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="roleOrgId != null">
+        #{roleOrgId,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null">
+        #{roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null">
+        #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="lesseeId != null">
+        #{lesseeId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zzb.module.system.entity.SysRoleOrg">
+    update sys_role_org
+    <set>
+      <if test="roleId != null">
+        role_id = #{roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null">
+        org_id = #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="lesseeId != null">
+        lessee_id = #{lesseeId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where role_org_id = #{roleOrgId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zzb.module.system.entity.SysRoleOrg">
+    update sys_role_org
+    set role_id = #{roleId,jdbcType=VARCHAR},
+      org_id = #{orgId,jdbcType=VARCHAR},
+      lessee_id = #{lesseeId,jdbcType=VARCHAR}
+    where role_org_id = #{roleOrgId,jdbcType=VARCHAR}
+  </update>
+</mapper>

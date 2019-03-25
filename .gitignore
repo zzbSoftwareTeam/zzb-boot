@@ -1,0 +1,6 @@
+/logs/
+/.settings/
+/target/
+/.apt_generated/
+/.svn/
+/data/

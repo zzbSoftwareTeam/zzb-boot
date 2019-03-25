@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zzb.module.system.dao.SysOrgDao">
+  <resultMap id="BaseResultMap" type="com.zzb.module.system.entity.SysOrg">
+    <id column="org_id" jdbcType="VARCHAR" property="orgId" />
+    <result column="lessee_id" jdbcType="VARCHAR" property="lesseeId" />
+    <result column="parent_id" jdbcType="VARCHAR" property="parentId" />
+    <result column="org_code" jdbcType="VARCHAR" property="orgCode" />
+    <result column="top_name" jdbcType="VARCHAR" property="topName" />
+    <result column="org_name" jdbcType="VARCHAR" property="orgName" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+    <result column="create_time" jdbcType="DATE" property="createTime" />
+    <result column="update_user" jdbcType="VARCHAR" property="updateUser" />
+    <result column="update_time" jdbcType="DATE" property="updateTime" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    org_id, lessee_id, parent_id, org_code, top_name, org_name, description, create_user, 
+    create_time, update_user, update_time, sort
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_org
+    where org_id = #{orgId,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectMaxSort" resultType="java.lang.Integer">
+    select sort from sys_org order by sort desc limit 1 
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_org
+    where org_id = #{orgId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zzb.module.system.entity.SysOrg">
+    insert into sys_org (org_id, lessee_id, parent_id, 
+      org_code, top_name, org_name, 
+      description, create_user, create_time, 
+      update_user, update_time, sort
+      )
+    values (#{orgId,jdbcType=VARCHAR}, #{lesseeId,jdbcType=VARCHAR}, #{parentId,jdbcType=VARCHAR}, 
+      #{orgCode,jdbcType=VARCHAR}, #{topName,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=DATE}, 
+      #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=DATE}, #{sort,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zzb.module.system.entity.SysOrg">
+    insert into sys_org
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orgId != null">
+        org_id,
+      </if>
+      <if test="lesseeId != null">
+        lessee_id,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="orgCode != null">
+        org_code,
+      </if>
+      <if test="topName != null">
+        top_name,
+      </if>
+      <if test="orgName != null">
+        org_name,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="createUser != null">
+        create_user,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateUser != null">
+        update_user,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orgId != null">
+        #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="lesseeId != null">
+        #{lesseeId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null">
+        #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="topName != null">
+        #{topName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null">
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=DATE},
+      </if>
+      <if test="updateUser != null">
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=DATE},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zzb.module.system.entity.SysOrg">
+    update sys_org
+    <set>
+      <if test="lesseeId != null">
+        lessee_id = #{lesseeId,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgCode != null">
+        org_code = #{orgCode,jdbcType=VARCHAR},
+      </if>
+      <if test="topName != null">
+        top_name = #{topName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null">
+        org_name = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null">
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="updateUser != null">
+        update_user = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=DATE},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+    </set>
+    where org_id = #{orgId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zzb.module.system.entity.SysOrg">
+    update sys_org
+    set lessee_id = #{lesseeId,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=VARCHAR},
+      org_code = #{orgCode,jdbcType=VARCHAR},
+      top_name = #{topName,jdbcType=VARCHAR},
+      org_name = #{orgName,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=DATE},
+      update_user = #{updateUser,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=DATE},
+      sort = #{sort,jdbcType=INTEGER}
+    where org_id = #{orgId,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 查询机构 -->
+  <select id="selectOrgs" parameterType="com.zzb.module.system.entity.SysOrg"  resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_org
+    <where>
+    	<if test="lesseeId != null">
+        AND lessee_id = #{lesseeId,jdbcType=VARCHAR}
+      </if>
+      <if test="parentId != null">
+        AND parent_id = #{parentId,jdbcType=VARCHAR}
+      </if>
+      <if test="orgCode != null">
+        AND org_code = #{orgCode,jdbcType=VARCHAR}
+      </if>
+      <if test="topName != null">
+       AND  top_name = #{topName,jdbcType=VARCHAR}
+      </if>
+      <if test="orgName != null">
+       AND  org_name = #{orgName,jdbcType=VARCHAR}
+      </if>
+      <if test="description != null">
+       AND  description = #{description,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+  
+  <select id="selectUserOrgs" parameterType="com.zzb.module.system.entity.SysOrg"  resultMap="BaseResultMap">
+    select org.* from sys_org org
+	LEFT JOIN sys_role_org ro ON org.org_id=ro.org_id
+	LEFT JOIN sys_user_role ur on ro.role_id = ur.role_id
+	WHERE ur.lessee_id =#{lesseeId,jdbcType=VARCHAR} AND ur.user_id=#{myUserId,jdbcType=VARCHAR}
+    <where>
+      <if test="parentId != null">
+        AND org.parent_id = #{parentId,jdbcType=VARCHAR}
+      </if>
+      <if test="orgCode != null">
+        AND org.org_code = #{orgCode,jdbcType=VARCHAR}
+      </if>
+      <if test="topName != null">
+       AND  org.top_name = #{topName,jdbcType=VARCHAR}
+      </if>
+      <if test="orgName != null">
+       AND  org.org_name = #{orgName,jdbcType=VARCHAR}
+      </if>
+      <if test="description != null">
+       AND  org.description = #{description,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+
+
+  <select id="selectOrgUserNum" parameterType="java.lang.String"  resultType="map">
+  	SELECT a.lessee_id,count(b.user_id) nums FROM (
+	  select * from sys_org WHERE queryChildrenDownRog(#{orgId,jdbcType=VARCHAR}) LIKE CONCAT('%',org_id,'%')
+	) a
+	LEFT JOIN  sys_user b ON a.org_id=b.org_id GROUP BY a.lessee_id limit 1
+  </select>
+  
+  <select id="selectOrgPost" parameterType="java.lang.String"  resultType="map">
+  	SELECT p.post_name postName,GROUP_CONCAT(u.user_name) userName FROM sys_org o
+	LEFT JOIN sys_post p ON p.org_id=o.org_id
+	LEFT JOIN sys_user u on u.post_id=p.post_id
+	WHERE o.org_id=#{orgId,jdbcType=VARCHAR} AND p.status='0' GROUP BY p.post_name
+  </select>
+</mapper>
